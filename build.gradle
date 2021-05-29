@@ -1,0 +1,38 @@
+// Top-level build file where you can add configuration options common to all sub-projects/modules.
+buildscript {
+    ext.versions = [
+            'kotlin'            : '1.5.0',
+            'retrofit'          : '2.9.0',
+            'okhttp'            : '4.4.1',
+            'logginginterceptor': '3.9.1',
+            'convertermoshi'    : '2.9.0',
+            'moshi'             : '1.12.0',
+            'adapterrxjava2'   : '2.7.2',
+            'realm'             : '10.4.0',
+            'rxkotlin'          : '3.0.0',
+            'rxandroid'         : '3.0.0'
+    ]
+
+    repositories {
+        google()
+        mavenCentral()
+    }
+    dependencies {
+        classpath "com.android.tools.build:gradle:4.2.1"
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:${versions.kotlin}"
+        // realm
+        classpath "io.realm:realm-gradle-plugin:${versions.realm}"
+
+    }
+}
+
+allprojects {
+    repositories {
+        google()
+        mavenCentral()
+    }
+}
+
+task clean(type: Delete) {
+    delete rootProject.buildDir
+}
