@@ -11,7 +11,8 @@ buildscript {
             'realm'             : '10.5.0',
             'rxkotlin'          : '3.0.1',
             'rxandroid'         : '3.0.0',
-            'multidex'          : '2.0.1'
+            'multidex'          : '2.0.1',
+            'navktx'            : '2.3.5'
     ]
 
     repositories {

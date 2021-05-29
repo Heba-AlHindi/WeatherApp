@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">WeatherApp</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="ic_splash_content_desc">ic splash content desc</string>
+    <string name="home">home</string>
+    <string name="search">search</string>
+    <string name="report">report</string>
 </resources>
