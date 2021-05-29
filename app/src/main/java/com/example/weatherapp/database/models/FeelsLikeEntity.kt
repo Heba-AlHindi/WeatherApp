@@ -4,16 +4,12 @@ import io.realm.RealmObject
 import io.realm.annotations.RealmClass
 
 @RealmClass(embedded = true)
-data class FeelsLikeEntity(
+open class FeelsLikeEntity(
+    var dayTemp: Float = 0F,
 
-    val dayTemp: Float = 0F,
+    var dayNightTemp: Float = 0F,
 
+    var dayEveTemp: Float = 0F,
 
-    val dayNight: Float = 0F,
-
-
-    val dayEve: Float = 0F,
-
-
-    val dayMorn: Float = 0F,
+    var dayMornTemp: Float = 0F,
 ) : RealmObject()

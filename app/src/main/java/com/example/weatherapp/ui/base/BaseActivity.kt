@@ -3,17 +3,16 @@ package com.example.weatherapp.ui.base
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.WindowManager
 import androidx.fragment.app.Fragment
 
 /**
  *  Common activities behaviour contained in the BaseActivity
  */
 abstract class BaseActivity : AppCompatActivity() {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
 
     // start new activity using Intent
     protected inline fun <reified T : Activity> startNewActivity(

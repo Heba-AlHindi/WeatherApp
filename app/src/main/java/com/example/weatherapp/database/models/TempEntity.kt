@@ -4,22 +4,16 @@ import io.realm.RealmObject
 import io.realm.annotations.RealmClass
 
 @RealmClass(embedded = true)
-data class TempEntity(
+open class TempEntity(
+    var dayTemp: Float = 0F,
 
-    val dayTemp: Float = 0F,
+    var dayMinTemp: Float = 0F,
 
+    var dayMaxTemp: Float = 0F,
 
-    val dayMin: Float = 0F,
+    var dayNightTemp: Float = 0F,
 
+    var dayEveTemp: Float = 0F,
 
-    val dayMax: Float = 0F,
-
-
-    val dayNight: Float = 0F,
-
-
-    val dayEve: Float = 0F,
-
-
-    val dayMorn: Float = 0F,
-): RealmObject()
+    var dayMorn: Float = 0F,
+) : RealmObject()

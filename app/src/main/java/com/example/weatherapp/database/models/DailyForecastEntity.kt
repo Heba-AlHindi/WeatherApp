@@ -1,28 +1,22 @@
 package com.example.weatherapp.database.models
 
+import io.realm.RealmList
 import io.realm.RealmObject
 import io.realm.annotations.RealmClass
 
 @RealmClass(embedded = true)
-class DailyForecastEntity(
+open class DailyForecastEntity(
+    var dailyTime: Long = 0L,
 
-    val time: Long = 0L,
+    var dailyTemp: TempEntity? = null,
 
+    var dailyFeelsLike: FeelsLikeEntity? = null,
 
-    val temp: TempEntity,
+    var dailyPressure: Int = 0,
 
+    var dailyHumidity: Int = 0,
 
-    val feelsLike: FeelsLikeEntity,
+    var dailyWindSpeed: Int = 0,
 
-
-    val pressure: Int = 0,
-
-
-    val humidity: Int = 0,
-
-
-    val windSpeed: Int = 0,
-
-
-    val weather: List<WeatherEntity>
-): RealmObject()
+    var dailyWeather: RealmList<WeatherEntity>? = null
+) : RealmObject()

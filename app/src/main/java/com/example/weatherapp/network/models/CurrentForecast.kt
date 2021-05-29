@@ -6,25 +6,25 @@ import com.squareup.moshi.JsonClass
 @JsonClass(generateAdapter = true)
 data class CurrentForecast(
     @Json(name = "")
-    val time: Long = 0L,
+    val time: Long,
 
     @Json(name = "")
-    val temp: Float = 0F,
+    val temp: Float,
 
     @Json(name = "")
-    val feelsLike: Float = 0F,
+    val feelsLike: Float,
 
     @Json(name = "")
-    val pressure: Int = 0,
+    val pressure: Int,
 
     @Json(name = "")
-    val humidity: Int = 0,
+    val humidity: Int,
 
     @Json(name = "")
-    val windSpeed: Int = 0,
+    val windSpeed: Int,
 
     @Json(name = "")
-    val visibilityDegree: Int = 0,
+    val visibilityDegree: Int,
 
     @Json(name = "weather")
     val weather: List<Weather>

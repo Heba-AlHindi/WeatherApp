@@ -5,9 +5,9 @@ import io.realm.annotations.RealmClass
 
 @RealmClass(embedded = true)
 open class WeatherEntity(
-    val main: String = "",
+    var mainWeather: String? = null,
 
-    val description: String = "",
+    var description: String? = null,
 
-    val icon: String?,
+    var icon: String? = null,
 ) : RealmObject()

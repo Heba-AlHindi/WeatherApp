@@ -1,24 +1,19 @@
 package com.example.weatherapp.database.models
 
+import io.realm.RealmList
 import io.realm.RealmObject
 
 open class ForecastEntity(
+    var lat: Float = 0F,
 
-    val lat: Double = 0.0,
+    var lon: Float = 0F,
 
+    var timezone: String? = null,
 
-    val lon: Double = 0.0,
+    var currentForecast: CurrentForecastEntity? = null,
 
+    var hourlyForecast: RealmList<HourlyForecastEntity>? = null,
 
-    val timezone: String = "",
-
-
-    val current: CurrentForecastEntity,
-
-
-    val hourly: List<HourlyForecastEntity>,
-
-
-    val dailyForecast: List<DailyForecastEntity>,
+    var dailyForecast: RealmList<DailyForecastEntity>? = null,
 ) : RealmObject()
 

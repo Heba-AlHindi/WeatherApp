@@ -6,13 +6,13 @@ import com.squareup.moshi.JsonClass
 @JsonClass(generateAdapter = true)
 data class ForecastResponse(
     @Json(name = "lat")
-    val lat: Double = 0.0,
+    val lat: Float,
 
     @Json(name = "lon")
-    val lon: Double = 0.0,
+    val lon: Float,
 
     @Json(name = "timezone")
-    val timezone: String = "",
+    val timezone: String,
 
     @Json(name = "current")
     val current: CurrentForecast,
