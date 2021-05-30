@@ -4,4 +4,6 @@
     <string name="home">home</string>
     <string name="search">search</string>
     <string name="report">report</string>
+    <string name="ic_icon_content_desc">icon content desc</string>
+    <string name="pick_location_desc">Find the area or the city that you want to know the detailed weather info at this time</string>
 </resources>
