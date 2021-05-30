@@ -74,4 +74,6 @@ dependencies {
     implementation "androidx.navigation:navigation-runtime-ktx:${versions.navktx}"
     implementation "androidx.navigation:navigation-fragment-ktx:${versions.navktx}"
     implementation "androidx.navigation:navigation-ui-ktx:${versions.navktx}"
+    // GridLayout
+    implementation "androidx.gridlayout:gridlayout:1.0.0"
 }
