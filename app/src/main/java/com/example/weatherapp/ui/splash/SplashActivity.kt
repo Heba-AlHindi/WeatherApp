@@ -1,26 +1,28 @@
 package com.example.weatherapp.ui.splash
 
 import android.os.Build
-import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.view.View
 import android.view.WindowManager
 import com.example.weatherapp.databinding.ActivitySplashBinding
 import com.example.weatherapp.ui.base.BaseActivity
+import com.example.weatherapp.ui.base.BaseViewModel
 import com.example.weatherapp.ui.main.MainActivity
 
-class SplashActivity : BaseActivity() {
 
-    private lateinit var binding: ActivitySplashBinding
+class SplashActivity : BaseActivity<ActivitySplashBinding, BaseViewModel>() {
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+    override fun getViewBinding() = ActivitySplashBinding.inflate(layoutInflater)
+    override fun getViewModelClass() = BaseViewModel::class.java
+
+    override fun init() {
+        super.init()
         hideStatusAndNavigationBar()
-        binding = ActivitySplashBinding.inflate(layoutInflater)
-        val view = binding.root
-        setContentView(view)
+    }
 
+    override fun setUpViews() {
+        super.setUpViews()
         Handler(Looper.getMainLooper()).postDelayed({
             startNewActivity<MainActivity>(this, true)
         }, 3000)

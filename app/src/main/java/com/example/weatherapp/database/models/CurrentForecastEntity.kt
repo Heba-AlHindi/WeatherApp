@@ -6,21 +6,25 @@ import io.realm.annotations.RealmClass
 
 @RealmClass(embedded = true)
 open class CurrentForecastEntity(
-    var currentTime: Long = 0,
+    var coordination: CoordinationEntity? = null,
 
-    var currentTemp: Float = 0F,
+    var cityInfo: CityInfoEntity? = null,
 
-    var currentFeelsLike: Float = 0F,
+    var weather: RealmList<WeatherEntity>? = null,
 
-    var currentPressure: Int = 0,
+    var mainForecast: MainForecastEntity? = null,
 
-    var currentHumidity: Int = 0,
+    var wind: WindEntity? = null,
 
-    var currentWindSpeed: Int = 0,
+    var clouds: CloudsEntity? = null,
 
-    var currentVisibilityDegree: Int = 0,
+    var currentTime: Int = 0,
 
-    var currentWeather: RealmList<WeatherEntity>? = null
+    var visibility: Int = 0,
+
+    var name: String? = null,
+
+    var id: Int = 0,
 ) : RealmObject()
 
 

@@ -1,7 +1,5 @@
 package com.example.weatherapp.ui.home
 
-import androidx.lifecycle.ViewModel
+import com.example.weatherapp.ui.base.BaseViewModel
 
-class HomeViewModel : ViewModel() {
-    // TODO: Implement the ViewModel
-}
+class HomeViewModel : BaseViewModel() {}

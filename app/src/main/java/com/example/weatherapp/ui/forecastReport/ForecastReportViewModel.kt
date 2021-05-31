@@ -1,7 +1,5 @@
 package com.example.weatherapp.ui.forecastReport
 
-import androidx.lifecycle.ViewModel
+import com.example.weatherapp.ui.base.BaseViewModel
 
-class ForecastReportViewModel : ViewModel() {
-
-}
+class ForecastReportViewModel : BaseViewModel()

@@ -1,4 +1,5 @@
 package com.example.weatherapp.ui.main
 
-class MainViewModel {
-}
+import com.example.weatherapp.ui.base.BaseViewModel
+
+class MainViewModel : BaseViewModel() {}
