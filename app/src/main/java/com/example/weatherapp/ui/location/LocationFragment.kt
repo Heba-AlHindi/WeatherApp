@@ -38,6 +38,7 @@ class LocationFragment : BaseFragment<LocationFragmentBinding, LocationViewModel
                     Toast.makeText(context, "Loading ...", Toast.LENGTH_LONG).show()
                 }
                 NetworkStatus.SUCCESS -> {
+                    Toast.makeText(context, it.message, Toast.LENGTH_LONG).show()
                     it.data?.citiesCurrentForecast?.toList()
                         ?.let { it1 -> updateForecastAdapter(it1) }
                 }

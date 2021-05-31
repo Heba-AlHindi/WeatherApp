@@ -50,7 +50,7 @@ abstract class NetworkRequestHandler<D_RESULT, N_RESULT> {
             } else {
                 result.addSource(databaseResult) { newData ->
                     result.setValue(
-                        Resource.success(newData)
+                        Resource.success("Success" ,newData, )
                     ) // source is updated don't call
                 }
             }
@@ -59,7 +59,7 @@ abstract class NetworkRequestHandler<D_RESULT, N_RESULT> {
 
     // fetch data from network using Rx
     private fun fetchFromNetwork() {
-//        result.addSource(dbSource) { newData -> result.setValue(Resource.loading(newData)) }
+        result.addSource(databaseResult) { newData -> result.setValue(Resource.loading(newData)) }
         fetchData()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
@@ -73,17 +73,17 @@ abstract class NetworkRequestHandler<D_RESULT, N_RESULT> {
 
                 override fun onSuccess(response: N_RESULT) {
                     Log.e("fetchFromNetwork", "onSuccess")
-//                    result.removeSource(dbSource) // remove un-updated source
+                    result.removeSource(databaseResult) // remove un-updated source
                     saveResultAndReInit(response) // update source
                 }
 
                 override fun onError(e: Throwable) {
                     Log.e("fetchFromNetwork", "onError")
                     onFetchFailed()
-//                    result.removeSource(dbSource)
-//                    result.addSource(dbSource) { newData ->
-//                        result.setValue(Resource.error(e.message.toString(), newData))
-//                    }
+                    result.removeSource(databaseResult)
+                    result.addSource(databaseResult) { newData ->
+                        result.setValue(Resource.error(e.message.toString(), newData))
+                    }
                     mDisposable!!.dispose()
                 }
             })
@@ -106,6 +106,7 @@ abstract class NetworkRequestHandler<D_RESULT, N_RESULT> {
                     result.addSource(loadFromDb()) { newData ->
                         result.setValue(
                             Resource.success(
+                                "Success",
                                 newData
                             )
                         )

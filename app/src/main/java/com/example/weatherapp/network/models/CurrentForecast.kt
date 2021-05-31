@@ -3,40 +3,40 @@ package com.example.weatherapp.network.models
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 import android.os.Parcelable
+import com.google.gson.annotations.SerializedName
 import kotlinx.parcelize.Parcelize
 
 
 @Parcelize
-@JsonClass(generateAdapter = true)
 data class CurrentForecast(
-    @Json(name = "coord")
+    @SerializedName("coord")
     val coordination: Coordination? = null,
 
-    @Json(name = "sys")
+    @SerializedName("sys")
     val cityInfo: CityInfo? = null,
 
-    @Json(name = "weather")
+    @SerializedName("weather")
     val weather: List<Weather?>? = null,
 
-    @Json(name = "main")
+    @SerializedName("main")
     val mainForecast: MainForecast? = null,
 
-    @Json(name = "wind")
+    @SerializedName("wind")
     val wind: Wind? = null,
 
-    @Json(name = "clouds")
+    @SerializedName("clouds")
     val clouds: Clouds? = null,
 
-    @Json(name = "dt")
+    @SerializedName("dt")
     val currentTime: Int? = null,
 
-    @Json(name = "visibility")
+    @SerializedName("visibility")
     val visibility: Int? = null,
 
-    @Json(name = "name")
+    @SerializedName("name")
     val name: String? = null,
 
-    @Json(name = "id")
+    @SerializedName("id")
     val id: Int? = null,
 ) : Parcelable
 

@@ -7,7 +7,7 @@ import com.example.weatherapp.network.utils.NetworkStatus.*
  */
 data class Resource<out T>(val networkStatus: NetworkStatus, val data: T?, val message: String?) {
     companion object {
-        fun <T> success(data: T?): Resource<T> {
+        fun <T> success(msg: String,data: T?): Resource<T> {
             return Resource(SUCCESS, data, null)
         }
 

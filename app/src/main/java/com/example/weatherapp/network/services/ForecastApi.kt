@@ -13,9 +13,9 @@ import retrofit2.http.Query
  */
 interface ForecastApi {
 
-    @GET(".")
+    @GET("group")
     fun getCurrentForAllCities(
-        @Query("group")
+        @Query("id")
         exclude: String,
         @Query("units")
         units: String,
