@@ -6,7 +6,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.viewbinding.ViewBinding
-import com.example.weatherapp.database.models.CurrentForecastEntity
+import com.example.weatherapp.database.models.cityCurrentForecast.CurrentForecastEntity
 import com.example.weatherapp.databinding.ItemLocationBinding
 import com.example.weatherapp.ui.base.BaseRecyclerAdapter
 
@@ -35,8 +35,8 @@ class LocationRecyclerAdapter(private val callBack: (List<CurrentForecastEntity>
                 context.resources.displayMetrics
             )
         }
-        cityBinding.tvTemp.text = currentList[position]?.mainForecast?.temp.toString()
-        cityBinding.tvStatus.text = currentList[position]?.weather?.get(0)?.mainWeather
+        cityBinding.tvTemp.text = currentList[position]?.main?.temp.toString()
+        cityBinding.tvStatus.text = currentList[position]?.weather?.get(0)?.main
         cityBinding.tvCityName.text = currentList[position]?.name
     }
 

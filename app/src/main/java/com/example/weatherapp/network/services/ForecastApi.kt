@@ -21,7 +21,7 @@ interface ForecastApi {
         units: String,
         @Query(value = "appid")
         appId: String
-    ): io.reactivex.rxjava3.core.Single<CitiesForecastResponse>
+    ): Single<CitiesForecastResponse>
 
     @GET("")
     fun getForecastByGeoCoordination(

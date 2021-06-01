@@ -1,5 +1,6 @@
 package com.example.weatherapp.database.models
 
+import com.example.weatherapp.database.models.cityCurrentForecast.WeatherEntity
 import io.realm.RealmList
 import io.realm.RealmObject
 import io.realm.annotations.RealmClass

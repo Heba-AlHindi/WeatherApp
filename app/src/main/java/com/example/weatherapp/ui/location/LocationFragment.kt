@@ -3,13 +3,10 @@ package com.example.weatherapp.ui.location
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
-import androidx.navigation.fragment.FragmentNavigator
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.weatherapp.R
-import com.example.weatherapp.database.models.CitiesForecastEntity
-import com.example.weatherapp.database.models.CurrentForecastEntity
+import com.example.weatherapp.database.models.cityCurrentForecast.CurrentForecastEntity
 import com.example.weatherapp.databinding.LocationFragmentBinding
 import com.example.weatherapp.network.utils.NetworkStatus
 import com.example.weatherapp.ui.base.BaseFragment

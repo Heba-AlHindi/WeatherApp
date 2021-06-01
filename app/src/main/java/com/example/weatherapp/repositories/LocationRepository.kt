@@ -3,8 +3,9 @@ package com.example.weatherapp.repositories
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.example.weatherapp.database.models.CitiesForecastEntity
-import com.example.weatherapp.network.datasources.CitiesForecastLocalDataSource
+import androidx.lifecycle.Transformations
+import com.example.weatherapp.database.daos.cityCurrentForecast.CityCurrentForecastDao
+import com.example.weatherapp.database.models.cityCurrentForecast.CitiesForecastEntity
 import com.example.weatherapp.network.datasources.CitiesForecastRemoteDataSource
 import com.example.weatherapp.network.models.CitiesForecastResponse
 import com.example.weatherapp.network.utils.NetworkRequestHandler
@@ -13,13 +14,10 @@ import com.example.weatherapp.network.utils.Resource
 import io.reactivex.rxjava3.core.Single
 import java.util.concurrent.TimeUnit
 
-class LocationRepository {
+class LocationRepository() {
 
     private val remoteDataSource: CitiesForecastRemoteDataSource =
         CitiesForecastRemoteDataSource()
-
-    private val localDataSource: CitiesForecastLocalDataSource =
-        CitiesForecastLocalDataSource()
 
     private val repoListRateLimit = RateLimiter<String>(30, TimeUnit.MINUTES)
 
@@ -32,9 +30,9 @@ class LocationRepository {
     fun getCitiesForecast(key: String): LiveData<Resource<CitiesForecastEntity>>? {
         try {
             return object : NetworkRequestHandler<CitiesForecastEntity, CitiesForecastResponse>() {
-                override fun saveCallResult(item: CitiesForecastResponse) =
-                    localDataSource.insertForecast(item)
-
+                override fun saveCallResult(item: CitiesForecastResponse) {
+                    return CityCurrentForecastDao().insert(item)
+                }
 
                 override fun shouldFetch(data: CitiesForecastEntity?): Boolean {
                     Log.e("LocationRepository", "shouldFetch()")
@@ -43,6 +41,9 @@ class LocationRepository {
 
                 override fun loadFromDb(): LiveData<CitiesForecastEntity> {
                     Log.e("LocationRepository", "loadFromDb()")
+                    Transformations.map(CityCurrentForecastDao().getCitiesCurrent()) {
+                        _data.postValue(it.first())
+                    }
                     return data
                 }
 
@@ -61,8 +62,4 @@ class LocationRepository {
             return null
         }
     }
-
-//    fun isUpdated(): Boolean {
-//
-//    }
 }

@@ -1,4 +1,4 @@
-package com.example.weatherapp.database.models
+package com.example.weatherapp.database.models.cityCurrentForecast
 
 import io.realm.RealmObject
 import io.realm.annotations.RealmClass

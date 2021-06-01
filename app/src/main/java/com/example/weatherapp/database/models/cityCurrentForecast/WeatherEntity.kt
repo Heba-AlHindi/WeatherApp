@@ -1,4 +1,4 @@
-package com.example.weatherapp.database.models
+package com.example.weatherapp.database.models.cityCurrentForecast
 
 import io.realm.RealmObject
 import io.realm.annotations.RealmClass
@@ -7,7 +7,7 @@ import io.realm.annotations.RealmClass
 open class WeatherEntity(
     var id: Int = 0,
 
-    var mainWeather: String? = null,
+    var main: String? = null,
 
     var description: String? = null,
 

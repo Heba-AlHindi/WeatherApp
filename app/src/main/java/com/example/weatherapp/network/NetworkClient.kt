@@ -18,8 +18,8 @@ import java.util.concurrent.TimeUnit
  */
 object NetworkClient {
 
-     fun retrofit(): Retrofit {
-        Log.e("RETROFIT", Constants.Network.BASE_URL)
+    @JvmStatic
+    fun <T> retrofit(clientClass: Class<T>): T {
         val interceptor = HttpLoggingInterceptor()
         interceptor.level = HttpLoggingInterceptor.Level.BODY
 
@@ -35,10 +35,15 @@ object NetworkClient {
             .client(okHttp)
             .addConverterFactory(GsonConverterFactory.create())
             .addCallAdapterFactory(RxJava3CallAdapterFactory.create())
-            .build()
+            .build().create(clientClass)
     }
 
-    val forecastService: ForecastApi by lazy {
-        retrofit().create(ForecastApi::class.java)
+    @JvmStatic
+    inline fun <reified T> client(): T {
+        return retrofit(T::class.java)
     }
+
+//    val forecastService: ForecastApi by lazy {
+//        retrofit().create(ForecastApi::class.java)
+//    }
 }

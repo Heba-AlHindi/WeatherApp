@@ -13,6 +13,7 @@ import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.core.SingleObserver
 import io.reactivex.rxjava3.disposables.Disposable
 import io.reactivex.rxjava3.schedulers.Schedulers
+import io.realm.RealmResults
 
 
 /**
@@ -34,12 +35,6 @@ abstract class NetworkRequestHandler<D_RESULT, N_RESULT> {
 
     init {
         result.value = Resource.loading(null) // start loading
-        if (shouldFetch(null)) {
-            // fetch updated data
-            Log.e("NETWORK_HANDLER", "shouldFetch = true")
-            fetchFromNetwork()
-        }
-        @Suppress("LeakingThis")
         databaseResult = loadFromDb()
         result.addSource(databaseResult) { data ->
             result.removeSource(databaseResult)
@@ -72,12 +67,14 @@ abstract class NetworkRequestHandler<D_RESULT, N_RESULT> {
                 }
 
                 override fun onSuccess(response: N_RESULT) {
+                    // handle success
                     Log.e("fetchFromNetwork", "onSuccess")
                     result.removeSource(databaseResult) // remove un-updated source
                     saveResultAndReInit(response) // update source
                 }
 
                 override fun onError(e: Throwable) {
+                    // handle error
                     Log.e("fetchFromNetwork", "onError")
                     onFetchFailed()
                     result.removeSource(databaseResult)

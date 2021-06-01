@@ -4,28 +4,30 @@ import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
+import io.realm.RealmObject
+import io.realm.annotations.RealmClass
 import kotlinx.parcelize.Parcelize
-
+@RealmClass(embedded = true)
 @Parcelize
 data class MainForecast(
     @SerializedName( "temp")
     val temp: Double?,
 
     @SerializedName("temp_min")
-    var tempMin: Double?,
+    var temp_min: Double?,
 
     @SerializedName("temp_max")
-    var tempMax: Double?,
+    var temp_max: Double?,
 
     @SerializedName("feels_like")
-    var feelsLike: Double?,
+    var feels_like: Double?,
 
     @SerializedName( "humidity")
     val humidity: Int?,
 
     @SerializedName("pressure")
     val pressure: Double?,
-) : Parcelable {
+) : Parcelable , RealmObject(){
 
     fun getTempString(): String {
         return temp.toString().substringBefore(".") + "°"
@@ -36,10 +38,10 @@ data class MainForecast(
     }
 
     fun getTempMinString(): String {
-        return tempMin.toString().substringBefore(".") + "°"
+        return temp_min.toString().substringBefore(".") + "°"
     }
 
     fun getTempMaxString(): String {
-        return tempMax.toString().substringBefore(".") + "°"
+        return temp_max.toString().substringBefore(".") + "°"
     }
 }
