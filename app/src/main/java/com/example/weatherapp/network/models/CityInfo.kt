@@ -7,7 +7,6 @@ import com.squareup.moshi.JsonClass
 import io.realm.RealmObject
 import io.realm.annotations.RealmClass
 import kotlinx.parcelize.Parcelize
-@RealmClass(embedded = true)
 @Parcelize
 data class CityInfo(
     @SerializedName("country")
@@ -15,4 +14,4 @@ data class CityInfo(
 
     @SerializedName("timezone")
     val timezone: String? = null
-) : Parcelable, RealmObject()
+) : Parcelable

@@ -7,7 +7,6 @@ import com.squareup.moshi.JsonClass
 import io.realm.RealmObject
 import io.realm.annotations.RealmClass
 import kotlinx.parcelize.Parcelize
-@RealmClass(embedded = true)
 @Parcelize
 data class Weather(
     @SerializedName("id")
@@ -21,4 +20,4 @@ data class Weather(
 
     @SerializedName("icon")
     val icon: String?,
-) : Parcelable, RealmObject()
+) : Parcelable

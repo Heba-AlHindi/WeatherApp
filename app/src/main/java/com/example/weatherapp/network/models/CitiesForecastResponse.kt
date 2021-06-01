@@ -12,4 +12,4 @@ data class CitiesForecastResponse(
 
     @SerializedName("list")
     val list: List<CurrentForecast>? = null,
-) : Parcelable , RealmObject()
+) : Parcelable

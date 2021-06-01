@@ -6,7 +6,7 @@ import io.realm.RealmObject
 import io.realm.annotations.RealmClass
 import kotlinx.parcelize.Parcelize
 
-@RealmClass(embedded = true)
+
 @Parcelize
 data class CurrentForecast(
     @SerializedName("coord")
@@ -38,7 +38,7 @@ data class CurrentForecast(
 
     @SerializedName("id")
     val id: Int? = null,
-) : Parcelable, RealmObject()
+) : Parcelable
 
 
 

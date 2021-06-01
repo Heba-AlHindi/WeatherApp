@@ -41,10 +41,7 @@ class LocationRepository() {
 
                 override fun loadFromDb(): LiveData<CitiesForecastEntity> {
                     Log.e("LocationRepository", "loadFromDb()")
-                    Transformations.map(CityCurrentForecastDao().getCitiesCurrent()) {
-                        _data.postValue(it.first())
-                    }
-                    return data
+                    return CityCurrentForecastDao().getCitiesCurrent()
                 }
 
                 override fun fetchData(): Single<CitiesForecastResponse> {

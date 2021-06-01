@@ -1,9 +1,9 @@
 plugins {
     id 'com.android.application'
     id 'kotlin-android'
+    id "org.jetbrains.kotlin.plugin.parcelize"
     id 'kotlin-kapt'
     id 'realm-android'
-    id "org.jetbrains.kotlin.plugin.parcelize"
 }
 
 android {
@@ -81,4 +81,7 @@ dependencies {
     implementation "androidx.navigation:navigation-ui-ktx:${versions.navktx}"
     // GridLayout
     implementation "androidx.gridlayout:gridlayout:1.0.0"
+    // Realm
+    kapt "io.realm:realm-annotations:10.5.0"
+    kapt "io.realm:realm-annotations-processor:10.5.0"
 }
