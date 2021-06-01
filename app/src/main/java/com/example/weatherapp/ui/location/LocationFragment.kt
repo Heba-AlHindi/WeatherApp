@@ -16,6 +16,7 @@ import com.example.weatherapp.ui.base.BaseFragment
  */
 class LocationFragment : BaseFragment<LocationFragmentBinding, LocationViewModel>() {
 
+
     override fun getViewBinding() = LocationFragmentBinding.inflate(layoutInflater)
 
     override fun getViewModelClass() = LocationViewModel::class.java
