@@ -22,6 +22,8 @@ class AppApplication : Application() {
         Realm.init(this)
         val config = RealmConfiguration.Builder()
             .deleteRealmIfMigrationNeeded()
+            .allowWritesOnUiThread(true)
+            .allowQueriesOnUiThread(true)
             .build()
         Realm.setDefaultConfiguration(config)
     }

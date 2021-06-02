@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="16dp"
-    tools:context=".ui.forecastReport.ForecastReportFragment">
+    tools:context=".ui.forecast_report.ForecastReportFragment">
 
     <TextView
         android:id="@+id/tv_forecast_report"

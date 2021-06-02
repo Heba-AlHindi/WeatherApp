@@ -10,7 +10,9 @@ import com.example.weatherapp.ui.base.BaseActivity
 import com.example.weatherapp.ui.base.BaseViewModel
 import com.example.weatherapp.ui.main.MainActivity
 
-
+/**
+ *  SplashActivity app launcher
+ */
 class SplashActivity : BaseActivity<ActivitySplashBinding, BaseViewModel>() {
 
     override fun getViewBinding() = ActivitySplashBinding.inflate(layoutInflater)

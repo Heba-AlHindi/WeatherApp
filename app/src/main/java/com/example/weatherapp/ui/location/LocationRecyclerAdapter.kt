@@ -9,8 +9,9 @@ import androidx.viewbinding.ViewBinding
 import com.example.weatherapp.database.models.cityCurrentForecast.CurrentForecastEntity
 import com.example.weatherapp.databinding.ItemLocationBinding
 import com.example.weatherapp.ui.base.BaseRecyclerAdapter
+import com.squareup.picasso.Picasso
 
-class LocationRecyclerAdapter(private val callBack: (List<CurrentForecastEntity>) -> Unit) :
+class LocationRecyclerAdapter(private val callBack: (CurrentForecastEntity) -> Unit) :
     BaseRecyclerAdapter<CurrentForecastEntity>(diffCallback) {
 
     override fun createBinding(parent: ViewGroup, viewType: Int): ViewBinding {
@@ -21,7 +22,7 @@ class LocationRecyclerAdapter(private val callBack: (List<CurrentForecastEntity>
         )
         // handle item click using callback
         binding.rootView.setOnClickListener {
-            callBack.invoke(currentList)
+            callBack.invoke(getItem(viewType))
         }
         return binding
     }
@@ -35,12 +36,17 @@ class LocationRecyclerAdapter(private val callBack: (List<CurrentForecastEntity>
                 context.resources.displayMetrics
             )
         }
-        cityBinding.tvTemp.text = currentList[position]?.main?.temp.toString()
+        cityBinding.tvTemp.text = currentList[position]?.main?.temp.toString().substringBefore(".") + "°"
         cityBinding.tvStatus.text = currentList[position]?.weather?.get(0)?.main
         cityBinding.tvCityName.text = currentList[position]?.name
+        // bind image from network
+        val iconPath = currentList[position].weather?.get(0)?.icon
+        if (iconPath?.isNotEmpty() == true) {
+            Picasso.get()
+                .load("http://openweathermap.org/img/w/$iconPath.png")
+                .into(binding.imgIcon)
+        }
     }
-
-
 }
 
 val diffCallback = object : DiffUtil.ItemCallback<CurrentForecastEntity>() {

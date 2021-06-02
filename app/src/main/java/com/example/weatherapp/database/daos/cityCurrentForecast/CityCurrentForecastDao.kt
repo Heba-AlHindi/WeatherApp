@@ -1,8 +1,7 @@
 package com.example.weatherapp.database.daos.cityCurrentForecast
 
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import com.example.weatherapp.database.asLiveData
+import com.example.weatherapp.database.LiveRealmObject
 import com.example.weatherapp.database.models.cityCurrentForecast.CitiesForecastEntity
 import com.example.weatherapp.network.models.CitiesForecastResponse
 import com.google.gson.Gson
@@ -11,35 +10,42 @@ import io.realm.Realm
 
 class CityCurrentForecastDao {
 
+    private val _current: LiveRealmObject<CitiesForecastEntity> = LiveRealmObject(null)
+    val current: LiveData<CitiesForecastEntity>
+        get() = _current
+
     fun insert(response: CitiesForecastResponse) {
         val realm = Realm.getDefaultInstance()
-        realm.executeTransactionAsync {
+        realm.executeTransaction {
             val json = Gson().toJson(response)
             val model = realm.createObjectFromJson(CitiesForecastEntity::class.java, json)
-            clear()
             model?.let {
                 realm.insertOrUpdate(model)
             }
         }
-        realm.close()
     }
 
     fun getCitiesCurrent(): LiveData<CitiesForecastEntity> {
         val realm = Realm.getDefaultInstance()
-        val data = MutableLiveData<CitiesForecastEntity>()
-        val realmResults = realm.where(CitiesForecastEntity::class.java).findAllAsync().asLiveData()
-        data.postValue(realmResults.value?.first())
-        realm.close()
-        return data
+        val realmResults = realm?.where(CitiesForecastEntity::class.java)?.findAll()
+        // handle edge case when first lunching the app
+        if (realmResults?.size == 0) {
+            realm.executeTransaction { transactionRealm ->
+                val counter = CitiesForecastEntity()
+                transactionRealm.insert(counter)
+            }
+        }
+        val arrayListOfUnmanagedObjects: List<CitiesForecastEntity> =
+            realm.copyFromRealm(realmResults)
+        this._current.postValue(arrayListOfUnmanagedObjects[0])
+        return current
     }
 
     fun clear() {
         val realm = Realm.getDefaultInstance()
-        realm.executeTransactionAsync {
+        realm.executeTransaction {
             val result = it.where(CitiesForecastEntity::class.java).findAll()
             result.deleteAllFromRealm()
         }
-        realm.close()
     }
-
 }

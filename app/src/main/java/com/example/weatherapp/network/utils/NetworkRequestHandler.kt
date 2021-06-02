@@ -45,7 +45,7 @@ abstract class NetworkRequestHandler<D_RESULT, N_RESULT> {
             } else {
                 result.addSource(databaseResult) { newData ->
                     result.setValue(
-                        Resource.success("Success" ,newData, )
+                        Resource.success("Success", newData)
                     ) // source is updated don't call
                 }
             }
@@ -94,6 +94,7 @@ abstract class NetworkRequestHandler<D_RESULT, N_RESULT> {
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(object : CompletableObserver {
                 override fun onSubscribe(d: Disposable) {
+                    Log.e("saveResultAndReInit", "onSubscribe")
                     if (!d.isDisposed) {
                         mDisposable = d
                     }
@@ -108,10 +109,12 @@ abstract class NetworkRequestHandler<D_RESULT, N_RESULT> {
                             )
                         )
                     }
+                    Log.e("saveResultAndReInit", "onComplete")
                     mDisposable!!.dispose()
                 }
 
                 override fun onError(e: Throwable) {
+                    Log.e("saveResultAndReInit", "onError")
                     mDisposable!!.dispose()
                 }
             })

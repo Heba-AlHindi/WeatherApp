@@ -8,10 +8,12 @@ import com.example.weatherapp.ui.base.BaseViewModel
 import io.realm.Realm
 
 class LocationViewModel : BaseViewModel() {
-
+    //    val realm: Realm by lazy {
+//        Realm.getDefaultInstance()
+//    }
     private val locationRepo: LocationRepository = LocationRepository()
 
-    fun getCitiesForecast(): LiveData<Resource<CitiesForecastEntity>>? {
+    fun getCitiesForecast(): LiveData<Resource<CitiesForecastEntity>> {
         return locationRepo.getCitiesForecast("CITY_FORECAST")
     }
 

@@ -1,5 +1,6 @@
 package com.example.weatherapp.database.models.cityCurrentForecast
 
+
 import io.realm.RealmList
 import io.realm.RealmObject
 import io.realm.annotations.RealmClass
@@ -25,10 +26,7 @@ open class CurrentForecastEntity(
     var name: String? = null,
 
     var id: Int = 0,
-) : RealmObject()
-
-
-
+) :  RealmObject()
 
 
 

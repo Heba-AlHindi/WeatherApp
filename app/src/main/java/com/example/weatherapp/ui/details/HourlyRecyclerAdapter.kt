@@ -1,11 +1,4 @@
-package com.example.weatherapp.ui.home
-
-import android.view.LayoutInflater
-import android.view.ViewGroup
-import androidx.viewbinding.ViewBinding
-import com.example.weatherapp.databinding.ItemHourlyBinding
-import com.example.weatherapp.network.models.HourlyForecast
-import com.example.weatherapp.ui.base.BaseRecyclerAdapter
+package com.example.weatherapp.ui.details
 
 
 //class HourlyRecyclerAdapter(private val hourlyForecasts: List<HourlyForecast>) :

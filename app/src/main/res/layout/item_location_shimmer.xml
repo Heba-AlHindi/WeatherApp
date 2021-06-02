@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+<com.google.android.material.card.MaterialCardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/rootView"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:layout_margin="8dp"
-    app:cardBackgroundColor="@color/purple_light"
+    android:padding="20dp"
+    app:cardBackgroundColor="#dddddd"
     app:cardCornerRadius="20dp"
     app:cardElevation="8dp"
     app:layout_constraintEnd_toEndOf="parent"
@@ -15,15 +16,15 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="#dddddd"
         android:padding="16dp">
 
         <TextView
             android:id="@+id/tv_temp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/roboto_medium"
+            android:background="#dddddd"
             android:padding="4dp"
-            android:text="23°"
             android:textColor="@color/white"
             android:textSize="24sp"
             android:textStyle="bold"
@@ -34,10 +35,8 @@
             android:id="@+id/tv_status"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/roboto_light"
             android:padding="4dp"
-
-            android:text="Clear"
+            android:background="#dddddd"
             android:textColor="@color/white"
             android:textSize="16sp"
             app:layout_constraintStart_toStartOf="@+id/tv_temp"
@@ -49,10 +48,8 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:layout_marginBottom="8dp"
-            android:fontFamily="@font/roboto_medium"
             android:padding="4dp"
-
-            android:text="Amman"
+            android:background="#dddddd"
             android:textColor="@color/white"
             android:textSize="18sp"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -60,14 +57,14 @@
             app:layout_constraintTop_toBottomOf="@+id/tv_status" />
 
         <ImageView
-            android:id="@+id/img_icon"
+            android:id="@+id/imageView3"
             android:layout_width="56dp"
             android:layout_height="56dp"
             android:layout_marginTop="8dp"
+            android:background="#dddddd"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/guideline"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/ic_splash" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guideline"

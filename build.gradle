@@ -24,7 +24,8 @@ buildscript {
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:${versions.kotlin}"
         // realm
         classpath "io.realm:realm-gradle-plugin:${versions.realm}"
-
+        // safe-args
+        classpath "androidx.navigation:navigation-safe-args-gradle-plugin:2.3.5"
     }
 }
 

@@ -1,11 +1,4 @@
-package com.example.weatherapp.ui.forecastReport
-
-import android.view.LayoutInflater
-import android.view.ViewGroup
-import androidx.viewbinding.ViewBinding
-import com.example.weatherapp.databinding.ItemDailyBinding
-import com.example.weatherapp.network.models.DailyForecast
-import com.example.weatherapp.ui.base.BaseRecyclerAdapter
+package com.example.weatherapp.ui.forecast_report
 
 //class DailyRecyclerAdapter(private val dailyForecasts: List<DailyForecast>) :
 //    BaseRecyclerAdapter() {

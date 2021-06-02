@@ -2,7 +2,6 @@ package com.example.weatherapp.network.models
 
 import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
-import io.realm.RealmObject
 import kotlinx.parcelize.Parcelize
 
 @Parcelize

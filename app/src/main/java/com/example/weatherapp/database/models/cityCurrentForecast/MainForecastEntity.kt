@@ -1,8 +1,11 @@
 package com.example.weatherapp.database.models.cityCurrentForecast
 
+import android.os.Parcelable
 import io.realm.RealmObject
 import io.realm.annotations.RealmClass
+import kotlinx.parcelize.Parcelize
 
+@Parcelize
 @RealmClass(embedded = true)
 open class MainForecastEntity(
     var temp: Double = 0.0,
@@ -16,4 +19,4 @@ open class MainForecastEntity(
     var humidity: Int = 0,
 
     var pressure: Double = 0.0,
-) : RealmObject()
+) : Parcelable, RealmObject()

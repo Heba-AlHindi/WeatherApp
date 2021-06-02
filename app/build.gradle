@@ -4,6 +4,7 @@ plugins {
     id "org.jetbrains.kotlin.plugin.parcelize"
     id 'kotlin-kapt'
     id 'realm-android'
+    id "androidx.navigation.safeargs.kotlin"
 }
 
 android {
@@ -84,4 +85,8 @@ dependencies {
     // Realm
     kapt "io.realm:realm-annotations:10.5.0"
     kapt "io.realm:realm-annotations-processor:10.5.0"
+    // Shimmer
+    implementation 'com.facebook.shimmer:shimmer:0.1.0@aar'
+    // Picasso
+    implementation "com.squareup.picasso:picasso:2.71828"
 }

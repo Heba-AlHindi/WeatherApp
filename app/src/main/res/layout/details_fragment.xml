@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="16dp"
-    tools:context=".ui.home.HomeFragment">
+    tools:context=".ui.details.DetailsFragment">
 
     <TextView
         android:id="@+id/tv_city"
@@ -15,53 +15,45 @@
         android:text="Amman"
         android:textColor="@color/black"
         android:textSize="28sp"
-        android:textStyle="normal"
+        android:fontFamily="@font/roboto_bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/tv_date"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="May 30,2021"
-        android:textColor="@android:color/darker_gray"
-        android:textSize="14sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_city" />
-
     <ImageView
         android:id="@+id/img_forecast"
-        android:layout_width="250dp"
-        android:layout_height="250dp"
-        android:layout_marginTop="8dp"
+        android:layout_width="56dp"
+        android:layout_height="56dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
         android:src="@drawable/ic_splash"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_date" />
+        app:layout_constraintEnd_toEndOf="@+id/tv_city"
+        app:layout_constraintStart_toEndOf="@+id/tv_status"
+        app:layout_constraintTop_toBottomOf="@+id/tv_city" />
 
     <TextView
         android:id="@+id/tv_status"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:fontFamily="@font/roboto_light"
         android:text="sunny"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/img_forecast" />
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="@+id/img_forecast"
+        app:layout_constraintEnd_toStartOf="@+id/img_forecast"
+        app:layout_constraintStart_toStartOf="@+id/tv_city"
+        app:layout_constraintTop_toTopOf="@+id/img_forecast" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rec_forecast_data"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
         android:orientation="horizontal"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_status"
-        tools:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-        tools:listitem="@layout/item_data" />
+        app:layout_constraintTop_toBottomOf="@+id/img_forecast"
+        tools:listitem="@layout/item_detail" />
 
     <TextView
         android:id="@+id/tv_today"
@@ -83,7 +75,6 @@
         android:orientation="horizontal"
         app:layout_constraintStart_toStartOf="@+id/tv_today"
         app:layout_constraintTop_toBottomOf="@+id/tv_today"
-        tools:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         tools:listitem="@layout/item_hourly" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

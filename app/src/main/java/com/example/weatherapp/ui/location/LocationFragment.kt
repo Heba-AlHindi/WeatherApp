@@ -5,7 +5,6 @@ import android.view.View
 import android.widget.Toast
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
-import com.example.weatherapp.R
 import com.example.weatherapp.database.models.cityCurrentForecast.CurrentForecastEntity
 import com.example.weatherapp.databinding.LocationFragmentBinding
 import com.example.weatherapp.network.utils.NetworkStatus
@@ -23,33 +22,47 @@ class LocationFragment : BaseFragment<LocationFragmentBinding, LocationViewModel
 
     override fun init() {
         super.init()
-        initForecastAdapter()
+        initLocationAdapter()
     }
 
     // set data to views
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel.getCitiesForecast()?.observe(viewLifecycleOwner) {
+        viewModel.getCitiesForecast().observe(viewLifecycleOwner) {
             when (it.networkStatus) {
                 NetworkStatus.LOADING -> {
-                    Toast.makeText(context, "Loading ...", Toast.LENGTH_LONG).show()
+                    binding.shimmerFrameLayout.startShimmerAnimation()
                 }
                 NetworkStatus.SUCCESS -> {
-                    Toast.makeText(context, it.message, Toast.LENGTH_LONG).show()
-                    it.data?.list?.toList()
-                        ?.let { it1 -> updateForecastAdapter(it1) }
+                    binding.shimmerFrameLayout.stopShimmerAnimation()
+                    binding.shimmerFrameLayout.visibility = View.GONE
+                    binding.recLocation.visibility = View.VISIBLE
+                    val list = it.data?.list?.subList(0, it.data.list!!.size)
+                    list?.let { it1 -> updateLocationAdapter(it1) }
                 }
                 NetworkStatus.ERROR -> {
+                    binding.shimmerFrameLayout.stopShimmerAnimation()
                     Toast.makeText(context, it.message, Toast.LENGTH_LONG).show()
                 }
             }
         }
     }
 
-    private fun initForecastAdapter() {
+    private fun initLocationAdapter() {
         val adapter = LocationRecyclerAdapter { item ->
-            findNavController().navigate(R.id.action_location_to_home)
+            val directions = item.wind?.speed?.toFloat()?.let {
+                LocationFragmentDirections.actionLocationToHome(
+                    item.name,
+                    item.sys?.timezone,
+                    item.weather?.get(0)?.icon,
+                    item.coord,
+                    item.main,
+                    it,
+                    item.weather?.get(0)?.main
+                )
+            }
+            directions?.let { findNavController().navigate(it) }
         }
         binding.recLocation.adapter = adapter
         binding.recLocation.layoutManager = GridLayoutManager(context, 2)
@@ -62,8 +75,32 @@ class LocationFragment : BaseFragment<LocationFragmentBinding, LocationViewModel
             }
     }
 
-    private fun updateForecastAdapter(list: List<CurrentForecastEntity>) {
+    private fun updateLocationAdapter(list: List<CurrentForecastEntity>) {
+        val adapter = LocationRecyclerAdapter { item ->
+            val directions = item.wind?.speed?.toFloat()?.let {
+                LocationFragmentDirections.actionLocationToHome(
+                    item.name,
+                    item.sys?.timezone,
+                    item.weather?.get(0)?.icon,
+                    item.coord,
+                    item.main,
+                    it,
+                    item.weather?.get(0)?.main
+                )
+            }
+            directions?.let { findNavController().navigate(it) }
+        }
+        binding.recLocation.adapter = adapter
+        binding.recLocation.layoutManager = GridLayoutManager(context, 2)
+        binding.recLocation.setHasFixedSize(true)
         (binding.recLocation.adapter as LocationRecyclerAdapter).submitList(list)
+        binding.recLocation.adapter!!.notifyDataSetChanged()
     }
 
+    override fun onPause() {
+        binding.shimmerFrameLayout.stopShimmerAnimation()
+        super.onPause()
+    }
 }
+
+
