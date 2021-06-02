@@ -18,7 +18,7 @@ open class CurrentForecastEntity(
 
     var clouds: CloudsEntity? = null,
 
-    var currentTime: Int = 0,
+    var dt: Int = 0,
 
     var visibility: Int = 0,
 

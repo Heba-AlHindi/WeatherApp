@@ -7,21 +7,20 @@ import com.example.weatherapp.database.models.cityCurrentForecast.CitiesForecast
 import com.example.weatherapp.network.models.CitiesForecastResponse
 import com.google.gson.Gson
 import io.realm.Realm
-import io.realm.RealmResults
 
 
-class CityCurrentForecastDao() {
+class CityCurrentForecastDao {
 
     fun insert(response: CitiesForecastResponse) {
         val realm = Realm.getDefaultInstance()
         realm.executeTransactionAsync {
             val json = Gson().toJson(response)
             val model = realm.createObjectFromJson(CitiesForecastEntity::class.java, json)
-            it.insert(model)
+            clear()
+            model?.let {
+                realm.insertOrUpdate(model)
+            }
         }
-//        realm.executeTransactionAsync {
-//            it.insert(it.copyToRealm(response))
-//        }
         realm.close()
     }
 

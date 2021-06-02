@@ -6,7 +6,7 @@ import io.realm.RealmObject
 
 
 open class CitiesForecastEntity(
-    var citiesNo: Int = 0,
+    var cnt: Int = 0,
 
-    var citiesCurrentForecast: RealmList<CurrentForecastEntity>? = null,
+    var list: RealmList<CurrentForecastEntity>? = null,
 ) : RealmObject()

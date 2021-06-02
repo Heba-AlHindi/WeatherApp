@@ -37,7 +37,7 @@ class LocationFragment : BaseFragment<LocationFragmentBinding, LocationViewModel
                 }
                 NetworkStatus.SUCCESS -> {
                     Toast.makeText(context, it.message, Toast.LENGTH_LONG).show()
-                    it.data?.citiesCurrentForecast?.toList()
+                    it.data?.list?.toList()
                         ?.let { it1 -> updateForecastAdapter(it1) }
                 }
                 NetworkStatus.ERROR -> {

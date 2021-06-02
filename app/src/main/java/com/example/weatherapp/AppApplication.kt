@@ -20,5 +20,9 @@ class AppApplication : Application() {
         super.onCreate()
         // init realm for whole project
         Realm.init(this)
+        val config = RealmConfiguration.Builder()
+            .deleteRealmIfMigrationNeeded()
+            .build()
+        Realm.setDefaultConfiguration(config)
     }
 }

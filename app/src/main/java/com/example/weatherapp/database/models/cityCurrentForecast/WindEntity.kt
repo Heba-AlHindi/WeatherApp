@@ -5,7 +5,7 @@ import io.realm.annotations.RealmClass
 
 @RealmClass(embedded = true)
 open class WindEntity(
-    var degree: Double = 0.0,
+    var deg: Double = 0.0,
 
     var speed: Double = 0.0
 ) : RealmObject()

@@ -55,5 +55,5 @@ val diffCallback = object : DiffUtil.ItemCallback<CurrentForecastEntity>() {
         oldItem: CurrentForecastEntity,
         newItem: CurrentForecastEntity
     ): Boolean =
-        oldItem.currentTime == newItem.id
+        oldItem.id == newItem.id
 }

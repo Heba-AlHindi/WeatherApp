@@ -7,5 +7,9 @@ import io.realm.annotations.RealmClass
 open class CityInfoEntity(
     var country: String? = null,
 
-    var timezone: String? = null
+    var timezone: String? = null,
+
+    var sunrise: Int = 0,
+
+    var sunset: Int = 0,
 ) : RealmObject()
