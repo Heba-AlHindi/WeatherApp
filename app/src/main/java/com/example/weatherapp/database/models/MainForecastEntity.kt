@@ -1,4 +1,4 @@
-package com.example.weatherapp.database.models.cityCurrentForecast
+package com.example.weatherapp.database.models
 
 import android.os.Parcelable
 import io.realm.RealmObject

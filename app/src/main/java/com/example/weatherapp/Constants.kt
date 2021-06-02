@@ -13,5 +13,6 @@ object Constants {
     object Forecast{
         const val IDS = "250441,250774,248944"
         const val UNITS = "metric"
+        const val EXCLUDE = ""
     }
 }

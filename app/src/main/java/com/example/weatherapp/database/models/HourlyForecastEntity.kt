@@ -1,25 +1,26 @@
 package com.example.weatherapp.database.models
 
-import com.example.weatherapp.database.models.cityCurrentForecast.WeatherEntity
 import io.realm.RealmList
 import io.realm.RealmObject
 import io.realm.annotations.RealmClass
 
 @RealmClass(embedded = true)
 open class HourlyForecastEntity(
-    var hourlyTime: Long = 0,
+    var dt: Long = 0,
 
-    var hourlyTemp: Float = 0F,
+    var temp: Float = 0F,
 
-    var hourlyFeelsLike: Float = 0F,
+    var feels_like: Float = 0F,
 
-    var hourlyPressure: Int = 0,
+    var pressure: Int = 0,
 
-    var hourlyHumidity: Int = 0,
+    var humidity: Int = 0,
 
-    var hourlyWindSpeed: Int = 0,
+    var wind_speed: Int = 0,
 
-    var hourlyVisibilityDegree: Int = 0,
+    var wind_deg: Int = 0,
 
-    var hourlyWeather: RealmList<WeatherEntity>? = null
+    var visibility: Int = 0,
+
+    var weather: RealmList<WeatherEntity>? = null
 ) : RealmObject()

@@ -13,9 +13,10 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
-        android:usesCleartextTraffic="true"
         android:supportsRtl="true"
-        android:theme="@style/Theme.WeatherApp">
+        android:theme="@style/Theme.WeatherApp"
+        android:usesCleartextTraffic="true">
+        <activity android:name=".ui.details.DetailsActivity"></activity>
         <activity android:name=".ui.splash.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

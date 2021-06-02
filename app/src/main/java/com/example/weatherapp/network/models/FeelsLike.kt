@@ -1,19 +1,20 @@
 package com.example.weatherapp.network.models
 
-import com.squareup.moshi.Json
-import com.squareup.moshi.JsonClass
+import android.os.Parcelable
+import com.google.gson.annotations.SerializedName
+import kotlinx.parcelize.Parcelize
 
-@JsonClass(generateAdapter = true)
+@Parcelize
 data class FeelsLike(
-    @Json(name = "day")
-    val dayTemp: Float,
+    @SerializedName("day")
+    val day: Float,
 
-    @Json(name = "night")
-    val dayNight: Float,
+    @SerializedName("night")
+    val night: Float,
 
-    @Json(name = "eve")
-    val dayEve: Float,
+    @SerializedName("eve")
+    val eve: Float,
 
-    @Json(name = "morn")
-    val dayMorn: Float,
-)
+    @SerializedName("morn")
+    val morn: Float,
+) : Parcelable

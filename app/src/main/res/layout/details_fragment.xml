@@ -35,8 +35,6 @@
         android:id="@+id/tv_status"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
         android:fontFamily="@font/roboto_light"
         android:text="sunny"
         android:textColor="@color/black"
@@ -51,6 +49,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
+        tools:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/img_forecast"
         tools:listitem="@layout/item_detail" />
@@ -61,11 +60,11 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:text="Today"
-        android:textColor="@color/black"
         android:textSize="16sp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="@+id/rec_forecast_data"
-        app:layout_constraintTop_toBottomOf="@+id/rec_forecast_data" />
+        android:textColor="@color/black"
+        android:fontFamily="@font/roboto_medium"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/rec_forecast_data"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rec_hourly_forecast"
@@ -75,6 +74,30 @@
         android:orientation="horizontal"
         app:layout_constraintStart_toStartOf="@+id/tv_today"
         app:layout_constraintTop_toBottomOf="@+id/tv_today"
+        tools:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         tools:listitem="@layout/item_hourly" />
+
+    <TextView
+        android:id="@+id/tv_next_forecasts"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Next Forecasts"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        android:fontFamily="@font/roboto_medium"
+        app:layout_constraintStart_toStartOf="@+id/rec_hourly_forecast"
+        app:layout_constraintTop_toBottomOf="@id/rec_hourly_forecast" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rec_daily_forecast"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:orientation="vertical"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_constraintStart_toStartOf="@+id/tv_next_forecasts"
+        app:layout_constraintTop_toBottomOf="@id/tv_next_forecasts"
+        tools:listitem="@layout/item_daily" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

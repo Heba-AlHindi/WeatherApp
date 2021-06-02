@@ -1,14 +1,14 @@
-package com.example.weatherapp.database.daos.cityCurrentForecast
+package com.example.weatherapp.database.daos
 
 import androidx.lifecycle.LiveData
 import com.example.weatherapp.database.LiveRealmObject
-import com.example.weatherapp.database.models.cityCurrentForecast.CitiesForecastEntity
+import com.example.weatherapp.database.models.CitiesForecastEntity
 import com.example.weatherapp.network.models.CitiesForecastResponse
 import com.google.gson.Gson
 import io.realm.Realm
 
 
-class CityCurrentForecastDao {
+class CitiesCurrentForecastDao {
 
     private val _current: LiveRealmObject<CitiesForecastEntity> = LiveRealmObject(null)
     val current: LiveData<CitiesForecastEntity>

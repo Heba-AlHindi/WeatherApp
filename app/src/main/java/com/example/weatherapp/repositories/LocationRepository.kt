@@ -2,8 +2,8 @@ package com.example.weatherapp.repositories
 
 import android.util.Log
 import androidx.lifecycle.LiveData
-import com.example.weatherapp.database.daos.cityCurrentForecast.CityCurrentForecastDao
-import com.example.weatherapp.database.models.cityCurrentForecast.CitiesForecastEntity
+import com.example.weatherapp.database.daos.CitiesCurrentForecastDao
+import com.example.weatherapp.database.models.CitiesForecastEntity
 import com.example.weatherapp.network.datasources.CitiesForecastRemoteDataSource
 import com.example.weatherapp.network.models.CitiesForecastResponse
 import com.example.weatherapp.network.utils.NetworkRequestHandler
@@ -17,13 +17,16 @@ class LocationRepository {
     private val remoteDataSource: CitiesForecastRemoteDataSource =
         CitiesForecastRemoteDataSource()
 
+    private val localeDataSource: CitiesCurrentForecastDao =
+        CitiesCurrentForecastDao()
+
     private val repoListRateLimit = RateLimiter<String>(30, TimeUnit.MINUTES)
 
     fun getCitiesForecast(key: String): LiveData<Resource<CitiesForecastEntity>> {
         return object : NetworkRequestHandler<CitiesForecastEntity, CitiesForecastResponse>() {
             override fun saveCallResult(item: CitiesForecastResponse) {
-                CityCurrentForecastDao().clear()
-                return CityCurrentForecastDao().insert(item)
+                localeDataSource.clear()
+                return localeDataSource.insert(item)
             }
 
             override fun shouldFetch(data: CitiesForecastEntity?): Boolean {
@@ -33,7 +36,7 @@ class LocationRepository {
 
             override fun loadFromDb(): LiveData<CitiesForecastEntity> {
                 Log.e("LocationRepository", "loadFromDb()")
-                return CityCurrentForecastDao().getCitiesCurrent()
+                return localeDataSource.getCitiesCurrent()
             }
 
             override fun fetchData(): Single<CitiesForecastResponse> {
@@ -47,5 +50,4 @@ class LocationRepository {
 
         }.asLiveData
     }
-
 }

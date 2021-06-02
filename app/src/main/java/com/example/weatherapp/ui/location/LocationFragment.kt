@@ -5,16 +5,19 @@ import android.view.View
 import android.widget.Toast
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
-import com.example.weatherapp.database.models.cityCurrentForecast.CurrentForecastEntity
+import com.example.weatherapp.database.models.CurrentForecastEntity
 import com.example.weatherapp.databinding.LocationFragmentBinding
 import com.example.weatherapp.network.utils.NetworkStatus
 import com.example.weatherapp.ui.base.BaseFragment
+import com.example.weatherapp.ui.base.BaseViewModelFactory
 
 /**
  *  LocationFragment Contains Required Locations With its currentForecast
  */
-class LocationFragment : BaseFragment<LocationFragmentBinding, LocationViewModel>() {
+class LocationFragment :
+    BaseFragment<LocationFragmentBinding, LocationViewModel, LocationViewModelFactory>() {
 
+    override fun getViewModelFactory() = LocationViewModelFactory()
 
     override fun getViewBinding() = LocationFragmentBinding.inflate(layoutInflater)
 
@@ -52,15 +55,27 @@ class LocationFragment : BaseFragment<LocationFragmentBinding, LocationViewModel
     private fun initLocationAdapter() {
         val adapter = LocationRecyclerAdapter { item ->
             val directions = item.wind?.speed?.toFloat()?.let {
-                LocationFragmentDirections.actionLocationToHome(
-                    item.name,
-                    item.sys?.timezone,
-                    item.weather?.get(0)?.icon,
-                    item.coord,
-                    item.main,
-                    it,
-                    item.weather?.get(0)?.main
-                )
+                item.name?.let { it1 ->
+                    item.sys?.timezone?.let { it2 ->
+                        item.weather?.get(0)?.icon?.let { it3 ->
+                            item.main?.let { it4 ->
+                                item.weather?.get(0)?.main?.let { it5 ->
+                                    item.coord?.let { it6 ->
+                                        LocationFragmentDirections.actionLocationToDetailsActivity(
+                                            it1,
+                                            it2,
+                                            it3,
+                                            it6,
+                                            it4,
+                                            it,
+                                            it5
+                                        )
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
             }
             directions?.let { findNavController().navigate(it) }
         }
@@ -78,15 +93,27 @@ class LocationFragment : BaseFragment<LocationFragmentBinding, LocationViewModel
     private fun updateLocationAdapter(list: List<CurrentForecastEntity>) {
         val adapter = LocationRecyclerAdapter { item ->
             val directions = item.wind?.speed?.toFloat()?.let {
-                LocationFragmentDirections.actionLocationToHome(
-                    item.name,
-                    item.sys?.timezone,
-                    item.weather?.get(0)?.icon,
-                    item.coord,
-                    item.main,
-                    it,
-                    item.weather?.get(0)?.main
-                )
+                item.name?.let { it1 ->
+                    item.sys?.timezone?.let { it2 ->
+                        item.main?.let { it3 ->
+                            item.coord?.let { it4 ->
+                                item.weather?.get(0)?.icon?.let { it5 ->
+                                    item.weather?.get(0)?.main?.let { it6 ->
+                                        LocationFragmentDirections.actionLocationToDetailsActivity(
+                                            it1,
+                                            it2,
+                                            it5,
+                                            it4,
+                                            it3,
+                                            it,
+                                            it6
+                                        )
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
             }
             directions?.let { findNavController().navigate(it) }
         }

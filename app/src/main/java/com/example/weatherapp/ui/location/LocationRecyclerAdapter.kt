@@ -6,7 +6,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.viewbinding.ViewBinding
-import com.example.weatherapp.database.models.cityCurrentForecast.CurrentForecastEntity
+import com.example.weatherapp.database.models.CurrentForecastEntity
 import com.example.weatherapp.databinding.ItemLocationBinding
 import com.example.weatherapp.ui.base.BaseRecyclerAdapter
 import com.squareup.picasso.Picasso

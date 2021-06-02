@@ -9,7 +9,7 @@ import com.example.weatherapp.databinding.ItemDetailBinding
 import com.example.weatherapp.ui.base.BaseRecyclerAdapter
 
 class DetailsRecyclerAdapter :
-    BaseRecyclerAdapter<Pair<String, String>>(diffCallback) {
+    BaseRecyclerAdapter<Pair<String, String>>(detailsCallback) {
 
     override fun createBinding(parent: ViewGroup, viewType: Int): ViewBinding {
         return ItemDetailBinding.inflate(
@@ -20,8 +20,8 @@ class DetailsRecyclerAdapter :
     }
 
     override fun bind(binding: ViewBinding, position: Int) {
-        val detailBinding = binding as ItemDetailBinding
-        detailBinding.rootView.apply {
+        val detailsBinding = binding as ItemDetailBinding
+        detailsBinding.rootView.apply {
             radius = TypedValue.applyDimension(
                 TypedValue.COMPLEX_UNIT_DIP,
                 10f,
@@ -29,12 +29,12 @@ class DetailsRecyclerAdapter :
             )
         }
         // bind data
-        detailBinding.tvTitle.text = currentList[position].first
-        detailBinding.tvValue.text = currentList[position].second
+        detailsBinding.tvTitle.text = currentList[position].first
+        detailsBinding.tvValue.text = currentList[position].second
     }
 }
 
-val diffCallback = object : DiffUtil.ItemCallback<Pair<String, String>>() {
+val detailsCallback = object : DiffUtil.ItemCallback<Pair<String, String>>() {
     override fun areItemsTheSame(
         oldItem: Pair<String, String>,
         newItem: Pair<String, String>

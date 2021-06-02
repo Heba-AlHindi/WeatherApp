@@ -19,19 +19,17 @@ import java.lang.reflect.ParameterizedType
  */
 abstract class BaseActivity<VB : ViewBinding, VM : BaseViewModel> : AppCompatActivity() {
 
-    private lateinit var viewModel: VM
-    protected lateinit var binding: VB
+    protected open lateinit var viewModel: VM
+    protected open lateinit var binding: VB
 
     protected abstract fun getViewBinding(): VB
     protected abstract fun getViewModelClass(): Class<VM>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        initBinding()
         init()
-        viewModel = ViewModelProvider(this).get(getViewModelClass())
-        binding = getViewBinding()
         setContentView(binding.root)
-
         setUpViews()
     }
 
@@ -76,7 +74,15 @@ abstract class BaseActivity<VB : ViewBinding, VM : BaseViewModel> : AppCompatAct
         }
     }
 
+    private fun initBinding() {
+        binding = getViewBinding()
+        viewModel = ViewModelProvider(this).get(getViewModelClass())
+    }
     open fun setUpViews() {}
 
     open fun init() {}
+
+    open fun getArgs() {
+
+    }
 }
