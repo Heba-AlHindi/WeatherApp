@@ -10,7 +10,6 @@ import com.example.weatherapp.network.utils.NetworkStatus
 import com.example.weatherapp.ui.base.BaseActivity
 import com.squareup.picasso.Picasso
 
-
 class DetailsActivity : BaseActivity<ActivityDetailsBinding, DetailsViewModel>() {
 
     override fun getViewBinding() = ActivityDetailsBinding.inflate(layoutInflater)
@@ -24,24 +23,25 @@ class DetailsActivity : BaseActivity<ActivityDetailsBinding, DetailsViewModel>()
 
     override fun setUpViews() {
         super.setUpViews()
-        /** set data views **/
+        /** extract args **/
         val intent = intent.extras?.let { DetailsActivityArgs.fromBundle(it) }
-        val lt = intent?.coordination?.lat
-        val ln = intent?.coordination?.lon
-
-        binding.tvCity.text = intent?.cityName ?: ""
-        binding.tvStatus.text = intent?.main ?: ""
-        Picasso.get()
-            .load("http://openweathermap.org/img/w/${intent?.icon ?: ""}.png")
-            .into(binding.imgForecast)
+        val lt = intent?.coordination?.lat ?: 0.0
+        val ln = intent?.coordination?.lon ?: 0.0
+        val cityName = intent?.cityName ?: ""
+        val status = intent?.main ?: ""
         val details = intent?.currentDetails
         val speed = intent?.windSpeed
-        val data = speed?.let { details?.let { it1 -> mapDetails(it, it1) } }
-        if (data != null) {
-            updateDetailsAdapter(data)
-        }
-        iconPath = intent?.icon!!
-        viewModel.getCityDetailsForecast(lt!!, ln!!).observe(this) {
+        iconPath = intent?.icon ?: ""
+
+        /** set data views **/
+        binding.tvCity.text = cityName
+        binding.tvStatus.text = status
+        Picasso.get()
+            .load("http://openweathermap.org/img/w/${iconPath}.png")
+            .into(binding.imgForecast)
+        val data = mapDetails(speed!!, details!!)
+        updateDetailsAdapter(data)
+        viewModel.getCityDetailsForecast(lt, ln).observe(this) {
             when (it.networkStatus) {
                 NetworkStatus.LOADING -> {
                 }
@@ -69,7 +69,6 @@ class DetailsActivity : BaseActivity<ActivityDetailsBinding, DetailsViewModel>()
         binding.recHourlyForecast.adapter = hourlyAdapter
         binding.recHourlyForecast.layoutManager =
             LinearLayoutManager(applicationContext, LinearLayoutManager.HORIZONTAL, false)
-
         // init daily
         val dailyAdapter = DailyRecyclerAdapter(iconPath)
         binding.recDailyForecast.adapter = dailyAdapter
@@ -124,10 +123,5 @@ class DetailsActivity : BaseActivity<ActivityDetailsBinding, DetailsViewModel>()
             LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         (binding.recDailyForecast.adapter as DailyRecyclerAdapter).submitList(list)
         binding.recDailyForecast.adapter!!.notifyDataSetChanged()
-    }
-
-    override fun getArgs() {
-        super.getArgs()
-        intent.extras?.let { DetailsActivityArgs.fromBundle(it).coordination.lat }
     }
 }

@@ -23,7 +23,7 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/roboto_medium"
             android:padding="4dp"
-            android:text="23°"
+            android:text=""
             android:textColor="@color/white"
             android:textSize="24sp"
             android:textStyle="bold"
@@ -37,7 +37,7 @@
             android:fontFamily="@font/roboto_light"
             android:padding="4dp"
 
-            android:text="Clear"
+            android:text=""
             android:textColor="@color/white"
             android:textSize="16sp"
             app:layout_constraintStart_toStartOf="@+id/tv_temp"
@@ -52,7 +52,7 @@
             android:fontFamily="@font/roboto_medium"
             android:padding="4dp"
 
-            android:text="Amman"
+            android:text=""
             android:textColor="@color/white"
             android:textSize="18sp"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -67,7 +67,8 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/guideline"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/ic_splash" />
+            app:srcCompat="@drawable/ic_splash"
+            android:contentDescription="@string/ic_icon_content_desc" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guideline"

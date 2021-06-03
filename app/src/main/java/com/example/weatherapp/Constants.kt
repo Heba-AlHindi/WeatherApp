@@ -10,9 +10,9 @@ object Constants {
         const val API_KEY_VALUE = "751d80f6c314139192ffcb62c107e654"
     }
 
-    object Forecast{
+    object Forecast {
         const val IDS = "250441,250774,248944"
         const val UNITS = "metric"
-        const val EXCLUDE = ""
+        const val EXCLUDE = "minutely,alerts,current"
     }
 }

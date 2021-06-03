@@ -5,8 +5,8 @@
     android:id="@+id/rootView"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:padding="20dp"
-    app:cardBackgroundColor="#dddddd"
+    android:padding="@dimen/padding_16"
+    app:cardBackgroundColor="@color/grey_shimmer"
     app:cardCornerRadius="20dp"
     app:cardElevation="8dp"
     app:layout_constraintEnd_toEndOf="parent"
@@ -64,7 +64,8 @@
             android:background="#dddddd"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/guideline"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            android:contentDescription="@string/ic_icon_content_desc" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guideline"

@@ -39,35 +39,6 @@
         </action>
     </fragment>
 
-    <fragment
-        android:id="@+id/detailsFragment"
-        android:name="com.example.weatherapp.ui.details.DetailsFragment"
-        android:label="home_fragment"
-        tools:layout="@layout/details_fragment">
-        <argument
-            android:name="city_name"
-            app:argType="string" />
-        <argument
-            android:name="time"
-            app:argType="string" />
-        <argument
-            android:name="icon"
-            app:argType="string" />
-        <argument
-            android:name="coordination"
-            app:argType="com.example.weatherapp.database.models.CoordinationEntity" />
-        <argument
-            android:name="current_details"
-            app:argType="com.example.weatherapp.database.models.MainForecastEntity" />
-        <argument
-            android:name="wind_speed"
-            android:defaultValue="0.0"
-            app:argType="float" />
-        <argument
-            android:name="main"
-            app:argType="string" />
-    </fragment>
-
     <activity
         android:id="@+id/detailsActivity"
         android:name="com.example.weatherapp.ui.details.DetailsActivity"

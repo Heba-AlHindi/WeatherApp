@@ -9,7 +9,6 @@ import com.example.weatherapp.database.models.CurrentForecastEntity
 import com.example.weatherapp.databinding.LocationFragmentBinding
 import com.example.weatherapp.network.utils.NetworkStatus
 import com.example.weatherapp.ui.base.BaseFragment
-import com.example.weatherapp.ui.base.BaseViewModelFactory
 
 /**
  *  LocationFragment Contains Required Locations With its currentForecast

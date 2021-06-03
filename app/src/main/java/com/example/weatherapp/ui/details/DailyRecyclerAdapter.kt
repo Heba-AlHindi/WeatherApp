@@ -8,11 +8,11 @@ import androidx.viewbinding.ViewBinding
 import com.example.weatherapp.database.models.DailyForecastEntity
 import com.example.weatherapp.databinding.ItemDailyBinding
 import com.example.weatherapp.ui.base.BaseRecyclerAdapter
+import com.example.weatherapp.utils.getDay
 import com.squareup.picasso.Picasso
-import java.text.SimpleDateFormat
-import java.util.*
 
-class DailyRecyclerAdapter(val iconPath : String) : BaseRecyclerAdapter<DailyForecastEntity>(dailyCallback) {
+class DailyRecyclerAdapter(private val iconPath: String) :
+    BaseRecyclerAdapter<DailyForecastEntity>(dailyCallback) {
 
     override fun createBinding(parent: ViewGroup, viewType: Int): ViewBinding {
         return ItemDailyBinding.inflate(
@@ -40,10 +40,10 @@ class DailyRecyclerAdapter(val iconPath : String) : BaseRecyclerAdapter<DailyFor
             .into(dailyBinding.imgForecast)
         // bind time
         val dt = currentList[position].dt
-        val sdf = SimpleDateFormat("dd/MM/yy hh:mm a")
-        val netDate = Date(dt)
-        val date = sdf.format(netDate)
-        binding.tvDay.text = date
+//        val sdf = SimpleDateFormat("dd/MM/yy hh:mm a")
+//        val netDate = Date(dt)
+//        val date = sdf.format(netDate)
+        binding.tvDay.text = getDay(dt)
 
     }
 }

@@ -8,6 +8,7 @@ import androidx.viewbinding.ViewBinding
 import com.example.weatherapp.database.models.HourlyForecastEntity
 import com.example.weatherapp.databinding.ItemHourlyBinding
 import com.example.weatherapp.ui.base.BaseRecyclerAdapter
+import com.example.weatherapp.utils.getHourOfDay
 
 class HourlyRecyclerAdapter : BaseRecyclerAdapter<HourlyForecastEntity>(hourlyCallback) {
 
@@ -29,7 +30,8 @@ class HourlyRecyclerAdapter : BaseRecyclerAdapter<HourlyForecastEntity>(hourlyCa
             )
         }
         // bind data
-        hourlyBinding.tvTime.text = currentList[position].dt.toString()
+        val dt = currentList[position].dt
+        hourlyBinding.tvTime.text = getHourOfDay(dt)
         hourlyBinding.tvTemp.text = currentList[position].temp.toString().substringBefore(".") + "°"
     }
 }
