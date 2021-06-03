@@ -16,11 +16,20 @@ open class HourlyForecastEntity(
 
     var humidity: Int = 0,
 
-    var wind_speed: Int = 0,
+    var wind_speed: Double = 0.0,
 
     var wind_deg: Int = 0,
 
     var visibility: Int = 0,
 
     var weather: RealmList<WeatherEntity>? = null
-) : RealmObject()
+) : RealmObject(){
+
+    override fun equals(other: Any?): Boolean {
+        return super.equals(other)
+    }
+
+    override fun hashCode(): Int {
+        return super.hashCode()
+    }
+}

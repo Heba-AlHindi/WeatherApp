@@ -31,16 +31,13 @@ class CityDetailsForecastDao {
             val realm = Realm.getDefaultInstance()
             val realmResults = realm?.where(CityForecastEntity::class.java)?.findAll()
             // handle empty edge case
-            if (realmResults?.size == 0) {
-                realm.executeTransaction { transactionRealm ->
-                    val entity = CityForecastEntity()
-                    transactionRealm.insert(entity)
-                }
-            } else {
-                val arrayListOfUnmanagedObjects: List<CityForecastEntity> =
-                    realm.copyFromRealm(realmResults)
-                this._data.postValue(arrayListOfUnmanagedObjects[0])
+            realm.executeTransaction { transactionRealm ->
+                val entity = CityForecastEntity()
+                transactionRealm.insert(entity)
             }
+            val arrayListOfUnmanagedObjects: List<CityForecastEntity> =
+                realm.copyFromRealm(realmResults)
+            this._data.postValue(arrayListOfUnmanagedObjects[0])
             return data
         } catch (e: Exception) {
             Log.e("getCityDetails() ", e.message.toString())

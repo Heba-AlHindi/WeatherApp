@@ -1,6 +1,7 @@
 package com.example.weatherapp.ui.details
 
 import android.widget.Toast
+import androidx.navigation.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.weatherapp.R
 import com.example.weatherapp.database.models.DailyForecastEntity
@@ -15,7 +16,7 @@ class DetailsActivity : BaseActivity<ActivityDetailsBinding, DetailsViewModel>()
 
     override fun getViewBinding() = ActivityDetailsBinding.inflate(layoutInflater)
     override fun getViewModelClass() = DetailsViewModel::class.java
-    private var iconPath: String = ""
+    private val args: DetailsActivityArgs by navArgs()
 
     override fun init() {
         super.init()
@@ -25,14 +26,13 @@ class DetailsActivity : BaseActivity<ActivityDetailsBinding, DetailsViewModel>()
     override fun setUpViews() {
         super.setUpViews()
         /** extract args **/
-        val intent = intent.extras?.let { DetailsActivityArgs.fromBundle(it) }
-        val lt = intent?.coordination?.lat ?: 0.0
-        val ln = intent?.coordination?.lon ?: 0.0
-        val cityName = intent?.cityName ?: ""
-        val status = intent?.main ?: ""
-        val details = intent?.currentDetails
-        val speed = intent?.windSpeed
-        iconPath = intent?.icon ?: ""
+        val lt = args.coordination.lat
+        val ln = args.coordination.lon
+        val cityName = args.cityName
+        val status = args.main
+        val details = args.currentDetails
+        val speed = args.windSpeed
+        val iconPath = args.icon
 
         /** set data views **/
         binding.tvCity.text = cityName
@@ -40,14 +40,16 @@ class DetailsActivity : BaseActivity<ActivityDetailsBinding, DetailsViewModel>()
         Picasso.get()
             .load("http://openweathermap.org/img/w/${iconPath}.png")
             .into(binding.imgForecast)
-        val data = mapDetails(speed!!, details!!)
+
+        val data = mapDetails(speed, details)
         updateDetailsAdapter(data)
+
         viewModel.getCityDetailsForecast(lt, ln).observe(this) {
             when (it.networkStatus) {
                 NetworkStatus.LOADING -> {
                 }
                 NetworkStatus.SUCCESS -> {
-                    val hourlyList = it.data?.hourly?.subList(0, it.data.hourly!!.size/2)
+                    val hourlyList = it.data?.hourly?.subList(0, it.data.hourly!!.size / 2)
                     val dailyList = it.data?.daily?.subList(0, it.data.daily!!.size)
                     hourlyList?.let { it1 -> updateHourlyAdapter(it1) }
                     dailyList?.let { it1 -> updateDailyAdapter(it1) }
@@ -71,7 +73,7 @@ class DetailsActivity : BaseActivity<ActivityDetailsBinding, DetailsViewModel>()
         binding.recHourlyForecast.layoutManager =
             LinearLayoutManager(applicationContext, LinearLayoutManager.HORIZONTAL, false)
         // init daily
-        val dailyAdapter = DailyRecyclerAdapter(iconPath)
+        val dailyAdapter = DailyRecyclerAdapter(args.icon)
         binding.recDailyForecast.adapter = dailyAdapter
         binding.recDailyForecast.layoutManager =
             LinearLayoutManager(applicationContext, LinearLayoutManager.VERTICAL, false)
@@ -83,16 +85,21 @@ class DetailsActivity : BaseActivity<ActivityDetailsBinding, DetailsViewModel>()
     ): ArrayList<Pair<String, String>> {
         // make map for weather details info
         val map = mutableMapOf<String, String?>()
-        map[resources.getString(R.string.temp)] = currentDetails.temp.toString().substringBefore(".") + "°"
+        map[resources.getString(R.string.temp)] =
+            currentDetails.temp.toString().substringBefore(".") + "°"
         currentDetails.feels_like.also {
             map[resources.getString(R.string.feels_like)] = it.toString().substringBefore(".") + "°"
         }
-        map[resources.getString(R.string.wind)] = windSpeed.toString().substringBefore(".") + " meter/sec"
+        map[resources.getString(R.string.wind)] =
+            windSpeed.toString().substringBefore(".") + " meter/sec"
         currentDetails.pressure.also {
             map[resources.getString(R.string.pressure)] = it.toString().substringBefore(".")
         }
         currentDetails.humidity.toDouble()
-            .also { map[resources.getString(R.string.humidity)] = it.toString().substringBefore(".") + "%" }
+            .also {
+                map[resources.getString(R.string.humidity)] =
+                    it.toString().substringBefore(".") + "%"
+            }
         val data: ArrayList<Pair<String, String>> = arrayListOf()
         map.forEach { (t, v) -> data.add(Pair(t, v.toString())) }
         return data
@@ -118,7 +125,7 @@ class DetailsActivity : BaseActivity<ActivityDetailsBinding, DetailsViewModel>()
     }
 
     private fun updateDailyAdapter(list: List<DailyForecastEntity>) {
-        val adapter = DailyRecyclerAdapter(iconPath)
+        val adapter = DailyRecyclerAdapter(args.icon)
         binding.recDailyForecast.adapter = adapter
         binding.recDailyForecast.layoutManager =
             LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
