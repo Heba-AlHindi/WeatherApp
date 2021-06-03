@@ -2,6 +2,7 @@ package com.example.weatherapp.ui.details
 
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.weatherapp.R
 import com.example.weatherapp.database.models.DailyForecastEntity
 import com.example.weatherapp.database.models.HourlyForecastEntity
 import com.example.weatherapp.database.models.MainForecastEntity
@@ -46,7 +47,7 @@ class DetailsActivity : BaseActivity<ActivityDetailsBinding, DetailsViewModel>()
                 NetworkStatus.LOADING -> {
                 }
                 NetworkStatus.SUCCESS -> {
-                    val hourlyList = it.data?.hourly?.subList(0, it.data.hourly!!.size)
+                    val hourlyList = it.data?.hourly?.subList(0, it.data.hourly!!.size/2)
                     val dailyList = it.data?.daily?.subList(0, it.data.daily!!.size)
                     hourlyList?.let { it1 -> updateHourlyAdapter(it1) }
                     dailyList?.let { it1 -> updateDailyAdapter(it1) }
@@ -82,16 +83,16 @@ class DetailsActivity : BaseActivity<ActivityDetailsBinding, DetailsViewModel>()
     ): ArrayList<Pair<String, String>> {
         // make map for weather details info
         val map = mutableMapOf<String, String?>()
-        map["Temp"] = currentDetails.temp.toString().substringBefore(".") + "°"
+        map[resources.getString(R.string.temp)] = currentDetails.temp.toString().substringBefore(".") + "°"
         currentDetails.feels_like.also {
-            map["Feels like"] = it.toString().substringBefore(".") + "°"
+            map[resources.getString(R.string.feels_like)] = it.toString().substringBefore(".") + "°"
         }
-        map["Wind"] = windSpeed.toString().substringBefore(".") + " meter/sec"
+        map[resources.getString(R.string.wind)] = windSpeed.toString().substringBefore(".") + " meter/sec"
         currentDetails.pressure.also {
-            map["Pressure"] = it.toString().substringBefore(".")
+            map[resources.getString(R.string.pressure)] = it.toString().substringBefore(".")
         }
         currentDetails.humidity.toDouble()
-            .also { map["Humidity"] = it.toString().substringBefore(".") + "%" }
+            .also { map[resources.getString(R.string.humidity)] = it.toString().substringBefore(".") + "%" }
         val data: ArrayList<Pair<String, String>> = arrayListOf()
         map.forEach { (t, v) -> data.add(Pair(t, v.toString())) }
         return data

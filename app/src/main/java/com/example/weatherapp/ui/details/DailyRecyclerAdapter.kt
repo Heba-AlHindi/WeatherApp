@@ -40,9 +40,6 @@ class DailyRecyclerAdapter(private val iconPath: String) :
             .into(dailyBinding.imgForecast)
         // bind time
         val dt = currentList[position].dt
-//        val sdf = SimpleDateFormat("dd/MM/yy hh:mm a")
-//        val netDate = Date(dt)
-//        val date = sdf.format(netDate)
         binding.tvDay.text = getDay(dt)
 
     }
