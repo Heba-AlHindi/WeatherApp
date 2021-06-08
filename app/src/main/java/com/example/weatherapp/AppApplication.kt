@@ -10,7 +10,7 @@ import io.realm.RealmConfiguration
 /**
  *  AppApplication Overrides Android Application
  */
-class AppApplication : MultiDexApplication() {
+class AppApplication : Application() {
 
     override fun attachBaseContext(base: Context) {
         super.attachBaseContext(base)
