@@ -20,7 +20,7 @@ class LocationRepository {
     private val localeDataSource: CitiesCurrentForecastDao =
         CitiesCurrentForecastDao()
 
-    private val repoListRateLimit = RateLimiter<String>(30, TimeUnit.MINUTES)
+    private val repoListRateLimit = RateLimiter<String>(10, TimeUnit.MINUTES)
 
     fun getCitiesForecast(key: String): LiveData<Resource<CitiesForecastEntity>> {
         return object : NetworkRequestHandler<CitiesForecastEntity, CitiesForecastResponse>() {
@@ -29,12 +29,13 @@ class LocationRepository {
                 return localeDataSource.insert(item)
             }
 
-            override fun shouldFetch(data: CitiesForecastEntity?): Boolean {
-                Log.e("LocationRepository", "shouldFetch()")
-                return true
+            override fun shouldFetch(data: CitiesForecastEntity): Boolean {
+                val isDataEmpty = data.list!!.size == 0
+                Log.e("LocationRepository", "isDataEmpty : $isDataEmpty")
+                return isDataEmpty || notUpdated(key)
             }
 
-            override fun loadFromDb(): LiveData<CitiesForecastEntity> {
+            override fun loadFromDb(): CitiesForecastEntity {
                 Log.e("LocationRepository", "loadFromDb()")
                 return localeDataSource.getCitiesCurrent()
             }
@@ -49,5 +50,9 @@ class LocationRepository {
             }
 
         }.asLiveData
+    }
+
+    fun notUpdated(key: String): Boolean {
+        return repoListRateLimit.shouldFetch(key)
     }
 }

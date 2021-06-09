@@ -2,7 +2,6 @@ package com.example.weatherapp.repositories
 
 import android.util.Log
 import androidx.lifecycle.LiveData
-import com.example.weatherapp.database.daos.CitiesCurrentForecastDao
 import com.example.weatherapp.database.daos.CityDetailsForecastDao
 import com.example.weatherapp.database.models.CityForecastEntity
 import com.example.weatherapp.network.datasources.CityForecastRemoteDataSource
@@ -34,12 +33,12 @@ class DetailsRepository {
                 return localeDataSource.insert(item)
             }
 
-            override fun shouldFetch(data: CityForecastEntity?): Boolean {
+            override fun shouldFetch(data: CityForecastEntity): Boolean {
                 Log.e("LocationRepository", "shouldFetch()")
                 return true
             }
 
-            override fun loadFromDb(): LiveData<CityForecastEntity> {
+            override fun loadFromDb(): CityForecastEntity {
                 Log.e("LocationRepository", "loadFromDb()")
                 return localeDataSource.getCityDetails()
             }

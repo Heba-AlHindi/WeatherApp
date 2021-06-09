@@ -15,4 +15,8 @@ object Constants {
         const val UNITS = "metric"
         const val EXCLUDE = "minutely,alerts,current"
     }
+
+    object Prefs {
+        const val PREFS_NAME = "com.example.weatherapp.preferences"
+    }
 }

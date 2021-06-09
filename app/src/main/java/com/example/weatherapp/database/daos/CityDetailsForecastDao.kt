@@ -16,40 +16,40 @@ class CityDetailsForecastDao {
         get() = _data
 
     fun insert(response: CityForecastResponse) {
-        val realm = Realm.getDefaultInstance()
-        realm.executeTransaction {
-            val json = Gson().toJson(response)
-            val model = realm.createObjectFromJson(CityForecastEntity::class.java, json)
-            model?.let {
-                realm.insertOrUpdate(model)
+        Realm.getDefaultInstance().use {
+            it.executeTransaction { realm ->
+                val json = Gson().toJson(response)
+                val model = it.createObjectFromJson(CityForecastEntity::class.java, json)
+                model?.let {
+                    realm.insertOrUpdate(model)
+                }
             }
         }
     }
 
-    fun getCityDetails(): LiveData<CityForecastEntity> {
-        try {
-            val realm = Realm.getDefaultInstance()
-            val realmResults = realm?.where(CityForecastEntity::class.java)?.findAll()
+    fun getCityDetails(): CityForecastEntity {
+
+        Realm.getDefaultInstance().use {
+            val realmResults = it?.where(CityForecastEntity::class.java)?.findAll()
             // handle empty edge case
-            realm.executeTransaction { transactionRealm ->
-                val entity = CityForecastEntity()
-                transactionRealm.insert(entity)
+            if (realmResults?.size == 0) {
+                it.executeTransaction { transactionRealm ->
+                    val entity = CityForecastEntity()
+                    transactionRealm.insert(entity)
+                }
             }
             val arrayListOfUnmanagedObjects: List<CityForecastEntity> =
-                realm.copyFromRealm(realmResults)
-            this._data.postValue(arrayListOfUnmanagedObjects[0])
-            return data
-        } catch (e: Exception) {
-            Log.e("getCityDetails() ", e.message.toString())
-            return data
+                it.copyFromRealm(realmResults)
+            return arrayListOfUnmanagedObjects[0]
         }
     }
 
     fun clear() {
-        val realm = Realm.getDefaultInstance()
-        realm.executeTransaction {
-            val result = it.where(CityForecastEntity::class.java).findAll()
-            result.deleteAllFromRealm()
+        Realm.getDefaultInstance().use { it ->
+            it.executeTransaction {
+                val result = it.where(CityForecastEntity::class.java).findAll()
+                result.deleteAllFromRealm()
+            }
         }
     }
 }
