@@ -2,15 +2,17 @@ package com.example.weatherapp.database
 
 import android.content.Context
 import android.content.SharedPreferences
+import com.example.weatherapp.Constants
 
+/**
+ *  Manage App SharedPref
+ */
 object SharedPrefHandler {
-
-    private const val LOCATIONS_LAST_FETCHED = "LOCATIONS_LAST_FETCHED"
 
     fun sharedPreference(context: Context, name: String): SharedPreferences =
         context.getSharedPreferences(name, Context.MODE_PRIVATE)
 
-    inline fun SharedPreferences.editPref(operation: (SharedPreferences.Editor) -> Unit) {
+    private inline fun SharedPreferences.editPref(operation: (SharedPreferences.Editor) -> Unit) {
         val edit = edit()
         operation(edit)
         edit.apply()
@@ -30,10 +32,18 @@ object SharedPrefHandler {
     }
 
     var SharedPreferences.locationsLastFetched
-        get() = getLong(LOCATIONS_LAST_FETCHED, 0L)
+        get() = getLong(Constants.Prefs.LOCATIONS_LAST_FETCHED, 0L)
         set(value) {
             editPref {
-                it.put(LOCATIONS_LAST_FETCHED to value)
+                it.put(Constants.Prefs.LOCATIONS_LAST_FETCHED to value)
+            }
+        }
+
+    var SharedPreferences.cityLastFetched
+        get() = getLong(Constants.Prefs.CITY_LAST_FETCHED, 0L)
+        set(value) {
+            editPref {
+                it.put(Constants.Prefs.CITY_LAST_FETCHED to value)
             }
         }
 

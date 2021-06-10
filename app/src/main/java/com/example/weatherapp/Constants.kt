@@ -18,5 +18,7 @@ object Constants {
 
     object Prefs {
         const val PREFS_NAME = "com.example.weatherapp.preferences"
+        const val LOCATIONS_LAST_FETCHED = "LOCATIONS_LAST_FETCHED"
+        const val CITY_LAST_FETCHED = "CITY_LAST_FETCHED"
     }
 }

@@ -38,10 +38,10 @@
         android:id="@+id/shimmerFrameLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/margin_24"
+        android:layout_marginTop="8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_search_desc">
+        app:layout_constraintTop_toBottomOf="@+id/tv_last_updated">
 
         <GridLayout
             android:layout_width="wrap_content"
@@ -65,9 +65,26 @@
         android:id="@+id/rec_location"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/margin_24"
+        android:layout_marginTop="8dp"
         android:visibility="gone"
-        app:layout_constraintTop_toBottomOf="@id/tv_search_desc"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_last_updated"
         tools:listitem="@layout/item_location" />
+
+    <TextView
+        android:id="@+id/tv_last_updated"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:fontFamily="@font/roboto_medium"
+        android:gravity="center"
+        android:textAlignment="center"
+        android:textColor="@android:color/darker_gray"
+        android:text="@string/last_updated"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_search_desc" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

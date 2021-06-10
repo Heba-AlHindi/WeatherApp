@@ -1,14 +1,20 @@
 package com.example.weatherapp.ui.location
 
+import android.content.SharedPreferences
+import android.content.res.Resources
 import android.os.Bundle
 import android.view.View
-import android.widget.Toast
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
+import com.example.weatherapp.AppApplication
+import com.example.weatherapp.database.SharedPrefHandler.locationsLastFetched
+import com.example.weatherapp.database.models.CitiesForecastEntity
 import com.example.weatherapp.database.models.CurrentForecastEntity
 import com.example.weatherapp.databinding.LocationFragmentBinding
 import com.example.weatherapp.network.utils.NetworkStatus
+import com.example.weatherapp.network.utils.Resource
 import com.example.weatherapp.ui.base.BaseFragment
+import java.util.concurrent.TimeUnit
 
 /**
  *  LocationFragment Contains Required Locations With its currentForecast
@@ -27,28 +33,52 @@ class LocationFragment :
         initLocationAdapter()
     }
 
+    private val prefs: SharedPreferences by lazy {
+        AppApplication.prefs!!
+    }
+
     // set data to views
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        // set last updated
 
         viewModel.getCitiesForecast().observe(viewLifecycleOwner) {
             when (it.networkStatus) {
                 NetworkStatus.LOADING -> {
+                    binding.tvLastUpdated.visibility = View.GONE
                     binding.shimmerFrameLayout.startShimmerAnimation()
                 }
                 NetworkStatus.SUCCESS -> {
-                    binding.shimmerFrameLayout.stopShimmerAnimation()
-                    binding.shimmerFrameLayout.visibility = View.GONE
-                    binding.recLocation.visibility = View.VISIBLE
-                    val list = it.data?.list?.subList(0, it.data.list!!.size)
-                    list?.let { it1 -> updateLocationAdapter(it1) }
+                    /** upload new data from network **/
+                    setLastUpdate()
+                    manageUI(it)
                 }
                 NetworkStatus.ERROR -> {
-                    binding.shimmerFrameLayout.stopShimmerAnimation()
-                    Toast.makeText(context, it.message, Toast.LENGTH_LONG).show()
+                    /** manage all errors including network connectivity by upload cache **/
+                    setLastUpdate()
+                    manageUI(it)
                 }
             }
         }
+    }
+
+    private fun setLastUpdate() {
+        val res: Resources = resources
+        val lastFetched = prefs.locationsLastFetched
+        val diff = System.currentTimeMillis() - lastFetched
+        val diffInMin = TimeUnit.MILLISECONDS.toMinutes(diff)
+        val text: String =
+            String.format(res.getString(com.example.weatherapp.R.string.last_updated), diffInMin)
+        binding.tvLastUpdated.text = text
+        binding.tvLastUpdated.visibility = View.VISIBLE
+    }
+
+    private fun manageUI(it: Resource<CitiesForecastEntity>) {
+        binding.shimmerFrameLayout.stopShimmerAnimation()
+        binding.shimmerFrameLayout.visibility = View.GONE
+        binding.recLocation.visibility = View.VISIBLE
+        val list = it.data?.list?.subList(0, it.data.list!!.size)
+        list?.let { it1 -> updateLocationAdapter(it1) }
     }
 
     private fun initLocationAdapter() {

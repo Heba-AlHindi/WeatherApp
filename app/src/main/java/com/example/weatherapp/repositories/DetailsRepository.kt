@@ -7,12 +7,11 @@ import com.example.weatherapp.database.models.CityForecastEntity
 import com.example.weatherapp.network.datasources.CityForecastRemoteDataSource
 import com.example.weatherapp.network.models.CityForecastResponse
 import com.example.weatherapp.network.utils.NetworkRequestHandler
-import com.example.weatherapp.network.utils.RateLimiter
 import com.example.weatherapp.network.utils.Resource
+import com.example.weatherapp.ui.base.WeatherRepository
 import io.reactivex.rxjava3.core.Single
-import java.util.concurrent.TimeUnit
 
-class DetailsRepository {
+class DetailsRepository : WeatherRepository() {
 
     private val remoteDataSource: CityForecastRemoteDataSource =
         CityForecastRemoteDataSource()
@@ -20,36 +19,35 @@ class DetailsRepository {
     private val localeDataSource: CityDetailsForecastDao =
         CityDetailsForecastDao()
 
-    private val repoListRateLimit = RateLimiter<String>(30, TimeUnit.MINUTES)
-
     fun getCityDetailsForecast(
         key: String,
         lat: Double,
         lon: Double
     ): LiveData<Resource<CityForecastEntity>> {
-        return object : NetworkRequestHandler<CityForecastEntity, CityForecastResponse>() {
+        return object : NetworkRequestHandler<CityForecastEntity, CityForecastResponse>(key) {
             override fun saveCallResult(item: CityForecastResponse) {
                 localeDataSource.clear()
                 return localeDataSource.insert(item)
             }
 
             override fun shouldFetch(data: CityForecastEntity): Boolean {
-                Log.e("LocationRepository", "shouldFetch()")
-                return true
+                val isDataEmpty = data.daily!!.size == 0
+                Log.e("DetailsRepository", "isDataEmpty : $isDataEmpty")
+                return isDataEmpty || notUpdated(key)
             }
 
             override fun loadFromDb(): CityForecastEntity {
-                Log.e("LocationRepository", "loadFromDb()")
+                Log.e("DetailsRepository", "loadFromDb()")
                 return localeDataSource.getCityDetails()
             }
 
             override fun fetchData(): Single<CityForecastResponse> {
-                Log.e("LocationRepository", "fetchData()")
+                Log.e("DetailsRepository", "fetchData()")
                 return remoteDataSource.callService(lat, lon)
             }
 
             override fun onFetchFailed() {
-                Log.e("LocationRepository", "onFetchFailed()")
+                Log.e("DetailsRepository", "onFetchFailed()")
             }
 
         }.asLiveData

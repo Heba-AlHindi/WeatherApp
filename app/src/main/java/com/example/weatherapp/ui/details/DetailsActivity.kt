@@ -1,14 +1,12 @@
 package com.example.weatherapp.ui.details
 
-import android.widget.Toast
 import androidx.navigation.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.weatherapp.R
-import com.example.weatherapp.database.models.DailyForecastEntity
-import com.example.weatherapp.database.models.HourlyForecastEntity
-import com.example.weatherapp.database.models.MainForecastEntity
+import com.example.weatherapp.database.models.*
 import com.example.weatherapp.databinding.ActivityDetailsBinding
 import com.example.weatherapp.network.utils.NetworkStatus
+import com.example.weatherapp.network.utils.Resource
 import com.example.weatherapp.ui.base.BaseActivity
 import com.squareup.picasso.Picasso
 
@@ -49,16 +47,20 @@ class DetailsActivity : BaseActivity<ActivityDetailsBinding, DetailsViewModel>()
                 NetworkStatus.LOADING -> {
                 }
                 NetworkStatus.SUCCESS -> {
-                    val hourlyList = it.data?.hourly?.subList(0, it.data.hourly!!.size / 2)
-                    val dailyList = it.data?.daily?.subList(0, it.data.daily!!.size)
-                    hourlyList?.let { it1 -> updateHourlyAdapter(it1) }
-                    dailyList?.let { it1 -> updateDailyAdapter(it1) }
+                    manageUI(it)
                 }
                 NetworkStatus.ERROR -> {
-                    Toast.makeText(this, it.message, Toast.LENGTH_LONG).show()
+                    manageUI(it)
                 }
             }
         }
+    }
+
+    private fun manageUI(it: Resource<CityForecastEntity>) {
+        val hourlyList = it.data?.hourly?.subList(0, it.data.hourly!!.size / 2)
+        val dailyList = it.data?.daily?.subList(0, it.data.daily!!.size)
+        hourlyList?.let { it1 -> updateHourlyAdapter(it1) }
+        dailyList?.let { it1 -> updateDailyAdapter(it1) }
     }
 
     private fun initAdapters() {

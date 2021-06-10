@@ -1,10 +1,15 @@
 package com.example.weatherapp.network.utils
 
+import android.content.SharedPreferences
 import android.util.Log
 import androidx.annotation.MainThread
 import androidx.annotation.WorkerThread
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.example.weatherapp.AppApplication
+import com.example.weatherapp.Constants
+import com.example.weatherapp.database.SharedPrefHandler.cityLastFetched
+import com.example.weatherapp.database.SharedPrefHandler.locationsLastFetched
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.CompletableObserver
@@ -19,7 +24,7 @@ import io.reactivex.rxjava3.schedulers.Schedulers
  *  manage fetching data from network and caching it
  */
 
-abstract class NetworkRequestHandler<D_RESULT, N_RESULT> {
+abstract class NetworkRequestHandler<D_RESULT, N_RESULT>(private val key: String) {
     /**
      *  result = MediatorLiveData<Resource<Result>>()
      *   -> can add or remove sources plus observe its changes
@@ -32,6 +37,10 @@ abstract class NetworkRequestHandler<D_RESULT, N_RESULT> {
     private val result = MutableLiveData<Resource<D_RESULT>>()
     internal val asLiveData: LiveData<Resource<D_RESULT>>
         get() = result // to observe result from ui
+
+    private val prefs: SharedPreferences by lazy {
+        AppApplication.prefs!!
+    }
 
     init {
         result.value = Resource.loading(null)
@@ -51,8 +60,10 @@ abstract class NetworkRequestHandler<D_RESULT, N_RESULT> {
                     }
                 }
 
+                // handle success
                 override fun onSuccess(response: N_RESULT) {
-                    // handle success
+                    // update last fetched only when fetching from network is succeed
+                    updateLastFetched()
                     saveResultAndReInit(response) // update source
                     Log.e("fetchFromNetwork", "onSuccess")
                 }
@@ -66,6 +77,17 @@ abstract class NetworkRequestHandler<D_RESULT, N_RESULT> {
             })
     }
 
+    private fun updateLastFetched() {
+        when (key) {
+            Constants.Prefs.LOCATIONS_LAST_FETCHED -> {
+                prefs.locationsLastFetched = System.currentTimeMillis()
+            }
+            Constants.Prefs.CITY_LAST_FETCHED -> {
+                prefs.cityLastFetched = System.currentTimeMillis()
+            }
+        }
+    }
+
     private fun saveResultAndReInit(response: N_RESULT) {
         Completable
             .fromCallable { saveCallResult(response) }
@@ -74,8 +96,6 @@ abstract class NetworkRequestHandler<D_RESULT, N_RESULT> {
             .subscribe(object : CompletableObserver {
                 override fun onSubscribe(d: Disposable) {
                     Log.e("saveResultAndReInit", "onSubscribe")
-//                    if (!d.isDisposed) {
-//                    }
                 }
 
                 override fun onComplete() {

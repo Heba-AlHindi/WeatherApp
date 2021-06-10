@@ -9,10 +9,10 @@ import com.example.weatherapp.network.models.CitiesForecastResponse
 import com.example.weatherapp.network.utils.NetworkRequestHandler
 import com.example.weatherapp.network.utils.RateLimiter
 import com.example.weatherapp.network.utils.Resource
+import com.example.weatherapp.ui.base.WeatherRepository
 import io.reactivex.rxjava3.core.Single
-import java.util.concurrent.TimeUnit
 
-class LocationRepository {
+class LocationRepository : WeatherRepository() {
 
     private val remoteDataSource: CitiesForecastRemoteDataSource =
         CitiesForecastRemoteDataSource()
@@ -20,10 +20,8 @@ class LocationRepository {
     private val localeDataSource: CitiesCurrentForecastDao =
         CitiesCurrentForecastDao()
 
-    private val repoListRateLimit = RateLimiter<String>(10, TimeUnit.MINUTES)
-
     fun getCitiesForecast(key: String): LiveData<Resource<CitiesForecastEntity>> {
-        return object : NetworkRequestHandler<CitiesForecastEntity, CitiesForecastResponse>() {
+        return object : NetworkRequestHandler<CitiesForecastEntity, CitiesForecastResponse>(key) {
             override fun saveCallResult(item: CitiesForecastResponse) {
                 localeDataSource.clear()
                 return localeDataSource.insert(item)
@@ -50,9 +48,5 @@ class LocationRepository {
             }
 
         }.asLiveData
-    }
-
-    fun notUpdated(key: String): Boolean {
-        return repoListRateLimit.shouldFetch(key)
     }
 }
